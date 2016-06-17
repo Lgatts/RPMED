@@ -5,12 +5,14 @@
  */
 package frames;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -55,6 +57,18 @@ public class Login extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+
+        jLoginPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLoginPasswordKeyPressed(evt);
+            }
+        });
+
+        jLoginEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLoginEmailKeyPressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Email");
@@ -129,9 +143,45 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
-        new Medic().setVisible(true);
-        this.dispose();
+
+        if (process.Login.verifyLogin(jLoginEmail.getText(), jLoginPassword.getPassword()) == true) {
+
+            String type = process.Login.getTypeTxt();
+            String name = process.Login.getUserNameTxt();
+
+            switch (type) {
+                case "Medic":
+                    JOptionPane.showMessageDialog(null, "Medico" + " " + name, "Bem vindo", JOptionPane.PLAIN_MESSAGE);
+                    new User().setVisible(true);
+                    this.dispose();
+                    break;
+                case "Admin":
+                    JOptionPane.showMessageDialog(null, "Administrador" + " " + name, "Bem vindo", JOptionPane.PLAIN_MESSAGE);
+                    new Admin().setVisible(true);
+                    this.dispose();
+                    break;
+                case "Secretary":
+                    JOptionPane.showMessageDialog(null, "Secretária" + " " + name, "Bem vindo", JOptionPane.PLAIN_MESSAGE);
+                    new User().setVisible(true);
+                    this.dispose();
+                    break;
+            }
+
+        }
+
     }//GEN-LAST:event_jButtonLoginActionPerformed
+
+    private void jLoginEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLoginEmailKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jLoginPassword.requestFocus();
+        }
+    }//GEN-LAST:event_jLoginEmailKeyPressed
+
+    private void jLoginPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLoginPasswordKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jButtonLogin.doClick();
+        }
+    }//GEN-LAST:event_jLoginPasswordKeyPressed
 
     /**
      * @param args the command line arguments
