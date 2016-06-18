@@ -11,6 +11,7 @@ public class Doctors {
 
     private String name;
     private String email;
+    private String fone;
     private String cpf;
 
     public String getName() {
@@ -27,6 +28,14 @@ public class Doctors {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFone() {
+        return fone;
+    }
+
+    public void setFone(String fone) {
+        this.fone = fone;
     }
 
     public String getCpf() {
@@ -46,6 +55,7 @@ public class Doctors {
 
             pw.println(this.name);
             pw.println(this.email);
+            pw.println(this.fone);
             pw.println(this.cpf);
 
             pw.flush(); //Enviar os dados do formulário e não salvar em um buffer
