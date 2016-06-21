@@ -7,18 +7,17 @@ package frames;
 
 /**
  *
- * @author Lucas
+ * @author Yury_Alencar
  */
-public class Register extends javax.swing.JFrame {
+public class Consultations extends javax.swing.JFrame {
 
     /**
-     * Creates new form Secretary
+     * Creates new form Consultations
      */
-    public Register() {
+    public Consultations() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("RPMed - Pacientes");
-
+        this.setTitle("RPMed - Consultas");
     }
 
     /**
@@ -85,21 +84,20 @@ public class Register extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Consultations.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Consultations.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Consultations.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Consultations.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Register().setVisible(true);
+                new Consultations().setVisible(true);
             }
         });
     }
