@@ -1,12 +1,17 @@
 package frames;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
+
 
 public class Admin extends javax.swing.JFrame {
 
@@ -24,7 +29,7 @@ public class Admin extends javax.swing.JFrame {
         jButSaveAdd = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabelNomeUser = new javax.swing.JLabel();
-        jTextFieldUserName = new javax.swing.JTextField();
+        txtUserName = new javax.swing.JTextField();
         jLabelMail = new javax.swing.JLabel();
         jTextFieldEmailUser = new javax.swing.JTextField();
         jComboBoxTipeUser = new javax.swing.JComboBox<>();
@@ -79,7 +84,7 @@ public class Admin extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabelNomeUser)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabelMail)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -101,7 +106,7 @@ public class Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNomeUser)
-                    .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelMail)
@@ -242,6 +247,22 @@ public class Admin extends javax.swing.JFrame {
 
     private void jButSaveAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveAddActionPerformed
         // TODO add your handling code here:
+        
+        int teste = 0;
+        
+        try{
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt",true)));
+                    
+            pw.println(txtUserName.getText());
+            pw.println(jTextFieldEmailUser.getText());
+            pw.println(jPasswordFieldPassword.getPassword());
+            pw.println(jComboBoxTipeUser.getSelectedItem().toString());
+            
+            //pw.flush();
+            pw.close();
+        }catch(IOException ex){
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButSaveAddActionPerformed
 
     private void jButListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButListActionPerformed
@@ -298,7 +319,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldEmailUser;
     private javax.swing.JTextField jTextFieldEmailUserEdit;
-    private javax.swing.JTextField jTextFieldUserName;
     private javax.swing.JTextField jTextFieldUserNameEdit;
+    private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }
