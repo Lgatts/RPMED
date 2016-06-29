@@ -22,6 +22,7 @@ public class Admin extends javax.swing.JFrame {
         String strLine;
         try {
             URL usersDataURL = Admin.class.getResource("/data/userNames.txt");
+            System.out.println(usersDataURL);
             BufferedReader br = new BufferedReader(new FileReader(usersDataURL.getPath()));
 //            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\src\\data\\userNames.txt"));
             DefaultListModel listModel = new DefaultListModel();
@@ -321,7 +322,9 @@ public class Admin extends javax.swing.JFrame {
         jTabEdit.setSelectedIndex(2);
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
+            URL usersDataURL = Admin.class.getResource("/data/users.txt");
+//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(usersDataURL.getPath()));
             String emailSelected = jListUsers.getSelectedValue();
             do {
                 email = br.readLine();

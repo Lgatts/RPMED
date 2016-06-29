@@ -17,10 +17,10 @@ public class ViewDoctors extends javax.swing.JFrame {
 
         String strLine;
         try {
-//            URL doctorsDataURL = ViewDoctors.class.getResource("/data/doctors.txt");
-//            System.out.println(doctorsDataURL);
-//            BufferedReader br = new BufferedReader(new FileReader(doctorsDataURL.getPath()));
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Mauricio\\Documents\\NetBeansProjects\\rpmed\\src\\data\\doctors.txt"));
+            URL doctorsDataURL = ViewDoctors.class.getResource("/data/doctors.txt");
+            System.out.println(doctorsDataURL);
+            BufferedReader br = new BufferedReader(new FileReader(doctorsDataURL.getPath()));
+//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Mauricio\\Documents\\NetBeansProjects\\rpmed\\src\\data\\doctors.txt"));
             DefaultListModel listModel = new DefaultListModel();
 
             while ((strLine = br.readLine()) != null) {
