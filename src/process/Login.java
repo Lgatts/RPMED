@@ -37,7 +37,12 @@ public class Login {
     
     public static boolean verifyLogin(String userName, char[] passwordArray) {
         
-        URL usersDataURL = Login.class.getResource("/data/users.txt"); //Criando url para o caminho do arquivo txt não influenciar
+        
+        URL usersDataURL = Login.class.getResource("/data/usersssssss.txt"); //Criando url para o caminho do arquivo txt não influenciar
+        
+        if(usersDataURL == null){
+            usersDataURL = Login.class.getResource("/data/defaultUser.txt");
+        }
         
         String password = "", passwordTxt;
         
