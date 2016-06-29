@@ -15,7 +15,16 @@ public class Patient {
     private String name;
     private String email;
     private String fone;
-    private String adress;    
+    private String adress;
+    private String rg;
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
     
     public String getCpf() {
         return cpf;
