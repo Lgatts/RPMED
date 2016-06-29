@@ -78,12 +78,6 @@ public class Register_Pacient extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        jPatientName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPatientNameActionPerformed(evt);
-            }
-        });
         getContentPane().add(jPatientName);
         jPatientName.setBounds(90, 50, 250, 30);
 
@@ -100,48 +94,24 @@ public class Register_Pacient extends javax.swing.JFrame {
         jLabel5.setText("CPF");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(220, 100, 34, 20);
-
-        jPatientRg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPatientRgActionPerformed(evt);
-            }
-        });
         getContentPane().add(jPatientRg);
         jPatientRg.setBounds(90, 90, 90, 30);
 
         jLabel3.setText("Endereço");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(10, 160, 85, 20);
-
-        jPatientAddress.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPatientAddressActionPerformed(evt);
-            }
-        });
         getContentPane().add(jPatientAddress);
         jPatientAddress.setBounds(90, 150, 190, 30);
 
         jLabel6.setText("Nº");
         getContentPane().add(jLabel6);
         jLabel6.setBounds(290, 150, 45, 30);
-
-        jPatientEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPatientEmailActionPerformed(evt);
-            }
-        });
         getContentPane().add(jPatientEmail);
         jPatientEmail.setBounds(90, 200, 160, 30);
 
         jLabel7.setText("E-mail");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(10, 210, 70, 14);
-
-        jPatientAddressNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPatientAddressNumberActionPerformed(evt);
-            }
-        });
         getContentPane().add(jPatientAddressNumber);
         jPatientAddressNumber.setBounds(320, 150, 110, 30);
 
@@ -172,11 +142,6 @@ public class Register_Pacient extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jPatientCpf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPatientCpfActionPerformed(evt);
-            }
-        });
         getContentPane().add(jPatientCpf);
         jPatientCpf.setBounds(250, 90, 90, 30);
 
@@ -190,22 +155,6 @@ public class Register_Pacient extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jPatientNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPatientNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPatientNameActionPerformed
-
-    private void jPatientRgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPatientRgActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPatientRgActionPerformed
-
-    private void jPatientAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPatientAddressActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPatientAddressActionPerformed
-
-    private void jPatientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPatientEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPatientEmailActionPerformed
 
     private void jPacitienAddressNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPacitienAddressNumberActionPerformed
         // TODO add your handling code here:
