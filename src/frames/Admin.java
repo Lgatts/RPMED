@@ -12,13 +12,32 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 
-
-
 public class Admin extends javax.swing.JFrame {
 
     public Admin() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("RPMed - Usuário(a)s");
+
+        String strLine;
+        try {
+            URL usersDataURL = Admin.class.getResource("/data/userNames.txt");
+            BufferedReader br = new BufferedReader(new FileReader(usersDataURL.getPath()));
+//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\src\\data\\userNames.txt"));
+            DefaultListModel listModel = new DefaultListModel();
+
+            while ((strLine = br.readLine()) != null) {
+                listModel.addElement(strLine);
+                System.out.println(strLine);
+            }
+
+            jListUsers.setModel(listModel);
+
+            br.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -38,7 +57,6 @@ public class Admin extends javax.swing.JFrame {
         jPasswordFieldPassword = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jButEdit = new javax.swing.JButton();
-        jButList = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListUsers = new javax.swing.JList<>();
         jButDel = new javax.swing.JButton();
@@ -138,13 +156,6 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
-        jButList.setText("Listar");
-        jButList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButListActionPerformed(evt);
-            }
-        });
-
         jListUsers.setToolTipText("");
         jScrollPane1.setViewportView(jListUsers);
 
@@ -163,8 +174,7 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButDel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButDel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -175,11 +185,10 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButList)
-                        .addGap(51, 51, 51)
                         .addComponent(jButEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButDel))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButDel)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
                 .addGap(45, 45, 45))
         );
@@ -281,92 +290,63 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButSaveAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveAddActionPerformed
-        // TODO add your handling code here:
-        
-        try{
-            PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt",true)));
-            PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\userNames.txt",true)));
-                
+        try {
+            PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt", true)));
+            PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\userNames.txt", true)));
+
             pwUser.println(jTextFieldEmailUser.getText());
             pwUser.println(txtUserName.getText());
             pwUser.println(jPasswordFieldPassword.getPassword());
             pwUser.println(jComboBoxTipeUser.getSelectedItem().toString());
-            
+
             pwUserNames.println(jTextFieldEmailUser.getText());
-            
+
             pwUser.close();
             pwUserNames.close();
-            
+
             jTextFieldEmailUser.setText("");
             txtUserName.setText("");
             jPasswordFieldPassword.setText("");
             jComboBoxTipeUser.setSelectedItem("Administrador");
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
 
-        }catch(IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro");
         }
     }//GEN-LAST:event_jButSaveAddActionPerformed
 
-    private void jButListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButListActionPerformed
-        String strLine;
-        try {
-            URL usersDataURL = Admin.class.getResource("/data/userNames.txt");
-            BufferedReader br = new BufferedReader(new FileReader(usersDataURL.getPath()));
-//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\src\\data\\userNames.txt"));
-            DefaultListModel listModel = new DefaultListModel();
-
-            while ((strLine = br.readLine()) != null) {
-                listModel.addElement(strLine);
-                System.out.println(strLine);
-            }
-
-            jListUsers.setModel(listModel);
-
-            br.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButListActionPerformed
-
     private void jButEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButEditActionPerformed
-        // TODO add your handling code here:
         String name, email, password, type;
         jTabEdit.setSelectedIndex(2);
-        
-        try{
+
+        try {
             BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
             String emailSelected = jListUsers.getSelectedValue();
-            do{
-               email = br.readLine();
-               name = br.readLine();
-               password = br.readLine();
-               type = br.readLine();               
-            }while (!(email.equals(emailSelected)));
-            
+            do {
+                email = br.readLine();
+                name = br.readLine();
+                password = br.readLine();
+                type = br.readLine();
+            } while (!(email.equals(emailSelected)));
+
             jTextFieldUserNameEdit.setText(name);
             jTextFieldEmailUserEdit.setText(email);
             jPasswordFieldPasswordEdit.setText(password);
             jlblType.setText(type);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
-        
-        
     }//GEN-LAST:event_jButEditActionPerformed
 
     private void jButSaveEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveEditActionPerformed
-        // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jButSaveEditActionPerformed
 
     private void jButDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButDelActionPerformed
-        // TODO add your handling code here:  
+
     }//GEN-LAST:event_jButDelActionPerformed
 
     public static void main(String args[]) {
@@ -381,7 +361,6 @@ public class Admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButDel;
     private javax.swing.JButton jButEdit;
-    private javax.swing.JButton jButList;
     private javax.swing.JButton jButSaveAdd;
     private javax.swing.JButton jButSaveEdit;
     private javax.swing.JComboBox<String> jComboBoxTipeUser;

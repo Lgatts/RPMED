@@ -5,6 +5,14 @@
  */
 package frames;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Yury_Alencar
@@ -17,7 +25,28 @@ public class ViewSecretaries extends javax.swing.JFrame {
     public ViewSecretaries() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("RPMed - Secretárias(os)");
+        this.setTitle("RPMed - Secretária(o)s");
+
+        String strLine;
+        try {
+//            URL doctorsDataURL = ViewDoctors.class.getResource("/data/doctors.txt");
+//            System.out.println(doctorsDataURL);
+//            BufferedReader br = new BufferedReader(new FileReader(doctorsDataURL.getPath()));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Mauricio\\Documents\\NetBeansProjects\\rpmed\\src\\data\\secretaries.txt"));
+            DefaultListModel listModel = new DefaultListModel();
+
+            while ((strLine = br.readLine()) != null) {
+                listModel.addElement(strLine);
+                System.out.println(strLine);
+            }
+
+            jListSecretaries.setModel(listModel);
+
+            br.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(ViewSecretaries.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -32,7 +61,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        jListSecretaries = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,12 +72,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
             }
         });
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(jListSecretaries);
 
         jTabbedPane4.addTab("Visualizar", jScrollPane2);
 
@@ -121,7 +145,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JList<String> jListSecretaries;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JToggleButton jToggleButton1;
