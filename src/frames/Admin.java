@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import javax.swing.JOptionPane;
 
 
 
@@ -24,7 +25,7 @@ public class Admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabEdit = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jButSaveAdd = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -36,7 +37,7 @@ public class Admin extends javax.swing.JFrame {
         jLabelPassword = new javax.swing.JLabel();
         jPasswordFieldPassword = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
-        jButSaveList = new javax.swing.JButton();
+        jButEdit = new javax.swing.JButton();
         jButList = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListUsers = new javax.swing.JList<>();
@@ -49,6 +50,8 @@ public class Admin extends javax.swing.JFrame {
         jLabelEditUser = new javax.swing.JLabel();
         jLabelPasswordEdit = new javax.swing.JLabel();
         jButSaveEdit = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jlblType = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,9 +123,14 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Adicionar", jPanel1);
+        jTabEdit.addTab("Adicionar", jPanel1);
 
-        jButSaveList.setText("Salvar");
+        jButEdit.setText("Editar");
+        jButEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButEditActionPerformed(evt);
+            }
+        });
 
         jButList.setText("Listar");
         jButList.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +143,11 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jListUsers);
 
         jButDel.setText("Deletar");
+        jButDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButDelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -143,7 +156,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButSaveList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButDel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -159,14 +172,14 @@ public class Admin extends javax.swing.JFrame {
                         .addComponent(jButList)
                         .addGap(38, 38, 38)
                         .addComponent(jButDel)
+                        .addGap(37, 37, 37)
+                        .addComponent(jButEdit)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButSaveList)
-                .addContainerGap())
+                .addGap(45, 45, 45))
         );
 
-        jTabbedPane1.addTab("Listar", jPanel2);
+        jTabEdit.addTab("Listar", jPanel2);
 
         jLabelUserMailEdit.setText("E-mail:");
 
@@ -175,35 +188,53 @@ public class Admin extends javax.swing.JFrame {
         jLabelPasswordEdit.setText("Senha:");
 
         jButSaveEdit.setText("Salvar");
+        jButSaveEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButSaveEditActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Tipo:");
+
+        jlblType.setText("Not found");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(38, 38, 38)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabelEditUser)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldUserNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jlblType))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabelPasswordEdit)
+                            .addComponent(jLabelEditUser)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPasswordFieldPasswordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButSaveEdit))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabelUserMailEdit)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextFieldEmailUserEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                            .addComponent(jTextFieldUserNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabelPasswordEdit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPasswordFieldPasswordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButSaveEdit))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabelUserMailEdit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldEmailUserEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jlblType))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelEditUser)
                     .addComponent(jTextFieldUserNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -216,10 +247,10 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(jLabelPasswordEdit)
                     .addComponent(jPasswordFieldPasswordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButSaveEdit))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Editar", jPanel3);
+        jTabEdit.addTab("Editar", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,7 +260,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jTabbedPane1)
+                    .addComponent(jTabEdit)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -238,7 +269,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jTabbedPane1)
+                    .addComponent(jTabEdit)
                     .addContainerGap()))
         );
 
@@ -248,28 +279,37 @@ public class Admin extends javax.swing.JFrame {
     private void jButSaveAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveAddActionPerformed
         // TODO add your handling code here:
         
-        int teste = 0;
-        
         try{
-            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt",true)));
-                    
-            pw.println(txtUserName.getText());
-            pw.println(jTextFieldEmailUser.getText());
-            pw.println(jPasswordFieldPassword.getPassword());
-            pw.println(jComboBoxTipeUser.getSelectedItem().toString());
+            PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt",true)));
+            PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\userNames.txt",true)));
+                
+            pwUser.println(jTextFieldEmailUser.getText());
+            pwUser.println(txtUserName.getText());
+            pwUser.println(jPasswordFieldPassword.getPassword());
+            pwUser.println(jComboBoxTipeUser.getSelectedItem().toString());
             
-            //pw.flush();
-            pw.close();
+            pwUserNames.println(jTextFieldEmailUser.getText());
+            
+            pwUser.close();
+            pwUserNames.close();
+            
+            jTextFieldEmailUser.setText("");
+            txtUserName.setText("");
+            jPasswordFieldPassword.setText("");
+            jComboBoxTipeUser.setSelectedItem("Administrador");
+            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+
         }catch(IOException ex){
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro");
         }
     }//GEN-LAST:event_jButSaveAddActionPerformed
 
     private void jButListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButListActionPerformed
         String strLine;
         try {
-            URL usersDataURL = Admin.class.getResource("/data/users.txt");
-            BufferedReader br = new BufferedReader(new FileReader(usersDataURL.getPath()));
+           // URL usersDataURL = Admin.class.getResource("/data/users.txt");
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\userNames.txt"));
             DefaultListModel listModel = new DefaultListModel();
 
             while ((strLine = br.readLine()) != null) {
@@ -286,6 +326,44 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButListActionPerformed
 
+    private void jButEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButEditActionPerformed
+        // TODO add your handling code here:
+        String name, email, password, type;
+        jTabEdit.setSelectedIndex(2);
+        
+        try{
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
+            String emailSelected = jListUsers.getSelectedValue();
+            do{
+               email = br.readLine();
+               name = br.readLine();
+               password = br.readLine();
+               type = br.readLine();               
+            }while (!(email.equals(emailSelected)));
+            
+            jTextFieldUserNameEdit.setText(name);
+            jTextFieldEmailUserEdit.setText(email);
+            jPasswordFieldPasswordEdit.setText(password);
+            jlblType.setText(type);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
+        
+        
+    }//GEN-LAST:event_jButEditActionPerformed
+
+    private void jButSaveEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveEditActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButSaveEditActionPerformed
+
+    private void jButDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButDelActionPerformed
+        // TODO add your handling code here:  
+    }//GEN-LAST:event_jButDelActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -297,12 +375,13 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButDel;
+    private javax.swing.JButton jButEdit;
     private javax.swing.JButton jButList;
     private javax.swing.JButton jButSaveAdd;
     private javax.swing.JButton jButSaveEdit;
-    private javax.swing.JButton jButSaveList;
     private javax.swing.JComboBox<String> jComboBoxTipeUser;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelEditUser;
     private javax.swing.JLabel jLabelMail;
     private javax.swing.JLabel jLabelNomeUser;
@@ -316,10 +395,11 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordFieldPassword;
     private javax.swing.JPasswordField jPasswordFieldPasswordEdit;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JTextField jTextFieldEmailUser;
     private javax.swing.JTextField jTextFieldEmailUserEdit;
     private javax.swing.JTextField jTextFieldUserNameEdit;
+    private javax.swing.JLabel jlblType;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }
