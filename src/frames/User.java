@@ -136,7 +136,7 @@ public class User extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Register view = new Register();
+        ViewPatients view = new ViewPatients();
         view.setVisible(true);
         
     }//GEN-LAST:event_jMenuItem6ActionPerformed
