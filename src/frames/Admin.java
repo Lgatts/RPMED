@@ -7,10 +7,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.function.Function;
 import javax.swing.JOptionPane;
+import process.Functions;
 
 public class Admin extends javax.swing.JFrame {
 
@@ -18,10 +19,8 @@ public class Admin extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("RPMed - Usuário(a)s");
+        jTabEdit.setEnabledAt(2, false);
 
-        URL doctorsDataURL = ViewDoctors.class.getResource("/data/userNames.txt");
-        process.Functions.createListModel(doctorsDataURL,this.jListUsers);
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -53,9 +52,15 @@ public class Admin extends javax.swing.JFrame {
         jLabelPasswordEdit = new javax.swing.JLabel();
         jButSaveEdit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jlblType = new javax.swing.JLabel();
+        jEditType = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabEdit.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabEditStateChanged(evt);
+            }
+        });
 
         jButSaveAdd.setText("Salvar");
         jButSaveAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -70,7 +75,7 @@ public class Admin extends javax.swing.JFrame {
 
         jLabelMail.setText("E-mail:");
 
-        jComboBoxTipeUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Médico", "Secretaria" }));
+        jComboBoxTipeUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Médico", "Secretária" }));
 
         jLabelPassword.setText("Senha:");
 
@@ -191,7 +196,7 @@ public class Admin extends javax.swing.JFrame {
 
         jLabel2.setText("Tipo:");
 
-        jlblType.setText("Not found");
+        jEditType.setText("nada");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -203,7 +208,7 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlblType))
+                        .addComponent(jEditType))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabelEditUser)
@@ -227,7 +232,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jlblType))
+                    .addComponent(jEditType))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelEditUser)
@@ -272,18 +277,26 @@ public class Admin extends javax.swing.JFrame {
 
     private void jButSaveAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveAddActionPerformed
         try {
-            URL usersDataURL = Admin.class.getResource("/data/users.txt");
-            URL userNamesDataURL = Admin.class.getResource("/data/usersNames.txt");
-            
-            PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter(usersDataURL.getPath(), true)));
-            PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter(userNamesDataURL.getPath(), true)));
-//            PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt", true)));
-//            PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\userNames.txt", true)));
+            String filePath = Functions.VerifyFile("users.txt", true);
+            String filePathNames = Functions.VerifyFile("usersNames.txt", true);
+
+            PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+            PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
 
             pwUser.println(jTextFieldEmailUser.getText());
             pwUser.println(txtUserName.getText());
             pwUser.println(jPasswordFieldPassword.getPassword());
-            pwUser.println(jComboBoxTipeUser.getSelectedItem().toString());
+
+            switch (jComboBoxTipeUser.getSelectedItem().toString()) {
+                case "Administrador":
+                    pwUser.println("Admin");
+                    break;
+                case "Médico":
+                    pwUser.println("Medic");
+                    break;
+                case "Secretária":
+                    pwUser.println("Secretary");
+            }
 
             pwUserNames.println(jTextFieldEmailUser.getText());
 
@@ -303,13 +316,18 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButSaveAddActionPerformed
 
     private void jButEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButEditActionPerformed
+
         String name, email, password, type;
+
         jTabEdit.setSelectedIndex(2);
+        jTabEdit.setEnabledAt(2, true);
+        jTabEdit.setEnabledAt(0, false);
+        jTabEdit.setEnabledAt(1, false);
 
         try {
-            URL usersDataURL = Admin.class.getResource("/data/users.txt");
-//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
-            BufferedReader br = new BufferedReader(new FileReader(usersDataURL.getPath()));
+            String filePath = Functions.VerifyFile("users.txt", false);
+
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
             String emailSelected = jListUsers.getSelectedValue();
             do {
                 email = br.readLine();
@@ -321,7 +339,7 @@ public class Admin extends javax.swing.JFrame {
             jTextFieldUserNameEdit.setText(name);
             jTextFieldEmailUserEdit.setText(email);
             jPasswordFieldPasswordEdit.setText(password);
-            jlblType.setText(type);
+            jEditType.setText(type);
 
         } catch (IOException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
@@ -336,6 +354,12 @@ public class Admin extends javax.swing.JFrame {
     private void jButDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButDelActionPerformed
 
     }//GEN-LAST:event_jButDelActionPerformed
+
+    private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged
+        if (jTabEdit.getSelectedIndex() == 1) {
+            process.Functions.createListModel("usersNames.txt", this.jListUsers);//Listar quando a tab do listar for selecionada
+        }
+    }//GEN-LAST:event_jTabEditStateChanged
 
     public static void main(String args[]) {
 
@@ -352,6 +376,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton jButSaveAdd;
     private javax.swing.JButton jButSaveEdit;
     private javax.swing.JComboBox<String> jComboBoxTipeUser;
+    private javax.swing.JLabel jEditType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelEditUser;
@@ -371,7 +396,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldEmailUser;
     private javax.swing.JTextField jTextFieldEmailUserEdit;
     private javax.swing.JTextField jTextFieldUserNameEdit;
-    private javax.swing.JLabel jlblType;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }

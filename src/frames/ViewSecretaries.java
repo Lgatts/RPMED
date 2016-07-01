@@ -9,8 +9,8 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import process.Functions;
 
 public class ViewSecretaries extends javax.swing.JFrame {
 
@@ -19,15 +19,15 @@ public class ViewSecretaries extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("RPMed - Secretária(o)s");
 
-         URL doctorsDataURL = ViewDoctors.class.getResource("/data/secretariesNames.txt");
-            process.Functions.createListModel(doctorsDataURL,this.jListSecretaries);
+        jTabEdit.setEnabledAt(2, false);
+        
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabEditar = new javax.swing.JTabbedPane();
+        jTabEdit = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
@@ -57,6 +57,12 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabEdit.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabEditStateChanged(evt);
+            }
+        });
 
         jToggleButton1.setText("Voltar");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +155,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
                 .addContainerGap(54, Short.MAX_VALUE))
         );
 
-        jTabEditar.addTab("Adicionar", jPanel1);
+        jTabEdit.addTab("Adicionar", jPanel1);
 
         jScrollPane1.setViewportView(jListSecretaries);
 
@@ -188,7 +194,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
-        jTabEditar.addTab("Listar", jPanel2);
+        jTabEdit.addTab("Listar", jPanel2);
 
         jLabel5.setText("Nome:");
 
@@ -267,7 +273,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
-        jTabEditar.addTab("Editar", jPanel3);
+        jTabEdit.addTab("Editar", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,14 +281,14 @@ public class ViewSecretaries extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabEditar)
+                .addComponent(jTabEdit)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabEditar)
+                .addComponent(jTabEdit)
                 .addContainerGap())
         );
 
@@ -298,12 +304,16 @@ public class ViewSecretaries extends javax.swing.JFrame {
 
     private void jEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditarActionPerformed
         String name, email, fone, cpf;
-        jTabEditar.setSelectedIndex(2);
+        
+        jTabEdit.setSelectedIndex(2);
+        jTabEdit.setEnabledAt(2, true);
+        jTabEdit.setEnabledAt(0, false);
+        jTabEdit.setEnabledAt(1, false);
 
         try {
-            URL secretariesDataURL = Admin.class.getResource("/data/secretaries.txt");
-//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
-            BufferedReader br = new BufferedReader(new FileReader(secretariesDataURL.getPath()));
+             String filePath = Functions.VerifyFile("secretaries.txt", false);
+             
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
             String emailSelected = jListSecretaries.getSelectedValue();
             do {
                 email = br.readLine();
@@ -324,13 +334,12 @@ public class ViewSecretaries extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            URL secretariesDataURL = Admin.class.getResource("/data/secretaries.txt");
-            URL secretariesNamesDataURL = Admin.class.getResource("/data/secretariesNames.txt");
+            String filePath = Functions.VerifyFile("secretaries.txt", true);
+            String filePathNames = Functions.VerifyFile("secretariesNames.txt", true);            
 
-            PrintWriter pwSecretaries = new PrintWriter(new BufferedWriter(new FileWriter(secretariesDataURL.getPath(), true)));
-            PrintWriter pwSecretariesNames = new PrintWriter(new BufferedWriter(new FileWriter(secretariesNamesDataURL.getPath(), true)));
-//            PrintWriter pwDoctor = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\secretaries.txt", true)));
-//            PrintWriter pwDoctorNames = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\secretariesNames.txt", true)));
+            PrintWriter pwSecretaries = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+            PrintWriter pwSecretariesNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
+            
             pwSecretaries.println(jTextEmailSecretaries.getText());
             pwSecretaries.println(jTextNomeSecretaries.getText());
             pwSecretaries.println(jTextFoneSecretaries.getText());
@@ -347,12 +356,17 @@ public class ViewSecretaries extends javax.swing.JFrame {
             jTextCpfSecretaries.setText("");
 
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro");
         }    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged
+        if (jTabEdit.getSelectedIndex() == 1) {
+            process.Functions.createListModel("secretariesNames.txt", this.jListSecretaries);//Listar quando a tab do listar for selecionada
+        }
+    }//GEN-LAST:event_jTabEditStateChanged
 
     public static void main(String args[]) {
 
@@ -382,7 +396,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton jSalvar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabEditar;
+    private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JFormattedTextField jTextCpfSecretaries;
     private javax.swing.JTextField jTextEmailSecretaries;
     private javax.swing.JFormattedTextField jTextFieldCpfSecretariesEdit;

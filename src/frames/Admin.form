@@ -48,6 +48,9 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JTabbedPane" name="jTabEdit">
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabEditStateChanged"/>
+      </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -164,7 +167,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Administrador"/>
                     <StringItem index="1" value="M&#xe9;dico"/>
-                    <StringItem index="2" value="Secretaria"/>
+                    <StringItem index="2" value="Secret&#xe1;ria"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -280,7 +283,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlblType" min="-2" max="-2" attributes="0"/>
+                              <Component id="jEditType" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -312,7 +315,7 @@
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlblType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jEditType" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -370,9 +373,9 @@
                 <Property name="text" type="java.lang.String" value="Tipo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jlblType">
+            <Component class="javax.swing.JLabel" name="jEditType">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Not found"/>
+                <Property name="text" type="java.lang.String" value="nada"/>
               </Properties>
             </Component>
           </SubComponents>

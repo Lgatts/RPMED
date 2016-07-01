@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import process.Functions;
 
 /**
  *
@@ -28,9 +29,10 @@ public class ViewPatients extends javax.swing.JFrame {
     public ViewPatients() {
         initComponents();
         this.setLocationRelativeTo(null);
-
-        URL doctorsDataURL = ViewDoctors.class.getResource("/data/patientsNames.txt");
-        process.Functions.createListModel(doctorsDataURL, this.jListPatients);
+        
+        
+        jTabEdit.setEnabledAt(2, false);
+      
 
     }
 
@@ -87,6 +89,12 @@ public class ViewPatients extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabEdit.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabEditStateChanged(evt);
+            }
+        });
 
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -393,11 +401,11 @@ public class ViewPatients extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            URL patientsDataURL = ViewPatients.class.getResource("/data/patients.txt");
-            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(patientsDataURL.getPath(), true)));
+            String filePath = Functions.VerifyFile("patients.txt", true);
+            String filePathNames = Functions.VerifyFile("patientsNames.txt", true);
             
-            URL patientsNamesDataURL = ViewPatients.class.getResource("/data/patientsNames.txt");
-            PrintWriter pwNames = new PrintWriter(new BufferedWriter(new FileWriter(patientsNamesDataURL.getPath(), true)));
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));  
+            PrintWriter pwNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
 
             pw.println(jPatientName.getText());
             pw.println(jPatientRg.getText());
@@ -407,10 +415,19 @@ public class ViewPatients extends javax.swing.JFrame {
             pw.println(jPatientAdress.getText());
             pw.println(jPatientAdressNumber.getText());
             
-            pwNames.println(jPatientName.getText());
+            //pwNames.println(jPatientName.getText());
             pwNames.println(jPatientEmail.getText());
-
+            
+            jPatientName.setText("");
+            jPatientRg.setText("");
+            jPatientCpf.setText("");
+            jPatientFone.setText("");
+            jPatientEmail.setText("");
+            jPatientAdress.setText("");
+            jPatientAdressNumber.setText("");
+            
             pw.close();
+            pwNames.close();
 
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
         } catch (IOException ex) {
@@ -448,11 +465,14 @@ public class ViewPatients extends javax.swing.JFrame {
         String name, email, fone, cpf, rg, adress, adressNumber;
 
         jTabEdit.setSelectedIndex(2);
+        jTabEdit.setEnabledAt(2, true);
+        jTabEdit.setEnabledAt(0, false);
+        jTabEdit.setEnabledAt(1, false);
 
         try {
-            URL doctorsDataURL = ViewDoctors.class.getResource("/data/patients.txt");
-            //            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
-            BufferedReader br = new BufferedReader(new FileReader(doctorsDataURL.getPath()));
+            String filePath = Functions.VerifyFile("patients.txt", false);
+            
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
             
             String emailSelected = jListPatients.getSelectedValue();
 
@@ -480,6 +500,12 @@ public class ViewPatients extends javax.swing.JFrame {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jEditarActionPerformed
+
+    private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged
+        if (jTabEdit.getSelectedIndex() == 1) {
+            process.Functions.createListModel("patientsNames.txt", this.jListPatients);//Listar quando a tab do listar for selecionada
+        }
+    }//GEN-LAST:event_jTabEditStateChanged
 
     /**
      * @param args the command line arguments

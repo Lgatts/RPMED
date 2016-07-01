@@ -6,6 +6,7 @@
 package main;
 
 import frames.Login;
+import java.io.File;
 
 /**
  *
@@ -13,6 +14,15 @@ import frames.Login;
  */
 public class Main {
     public static void main(String[] args) {
+        
+        if(new File(System.getenv("APPDATA") + "\\.RpMed").exists()){
+            
+        }
+        else{
+            new File(System.getenv("APPDATA") + "\\.RpMed").mkdir();
+        }
+        
+        
         new Login().setVisible(true);
     }
 }

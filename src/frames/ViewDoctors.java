@@ -11,16 +11,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import process.Functions;
 
 public class ViewDoctors extends javax.swing.JFrame {
 
     public ViewDoctors() {
+        
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("RPMed - Médico(a)s");
+        this.setTitle("RPMed - Médico(a)s");  
         
-        URL doctorsDataURL = ViewDoctors.class.getResource("/data/doctorsNames.txt");
-        process.Functions.createListModel(doctorsDataURL,this.jListDoctors);        
+        jTabEdit.setEnabledAt(2, false);
         
     }
     @SuppressWarnings("unchecked")
@@ -66,6 +67,12 @@ public class ViewDoctors extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabEdit.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabEditStateChanged(evt);
+            }
+        });
 
         jLabel1.setText("Nome:");
 
@@ -310,12 +317,16 @@ public class ViewDoctors extends javax.swing.JFrame {
 
     private void jEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditarActionPerformed
         String name, email, fone, cpf;
+        
         jTabEdit.setSelectedIndex(2);
+        jTabEdit.setEnabledAt(2, true);
+        jTabEdit.setEnabledAt(0, false);
+        jTabEdit.setEnabledAt(1, false);
 
         try {
-            URL doctorsDataURL = ViewDoctors.class.getResource("/data/doctors.txt");
+            String filePath = Functions.VerifyFile("doctors.txt", false);
 //            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
-            BufferedReader br = new BufferedReader(new FileReader(doctorsDataURL.getPath()));
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
             String emailSelected = jListDoctors.getSelectedValue();
             do {
                 email = br.readLine();
@@ -336,13 +347,12 @@ public class ViewDoctors extends javax.swing.JFrame {
 
     private void jSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalvarActionPerformed
         try {
-            URL doctorsDataURL = Admin.class.getResource("/data/doctors.txt");
-            URL doctorsNamesDataURL = Admin.class.getResource("/data/doctorsNames.txt");
+            String filePath = Functions.VerifyFile("doctors.txt", true);
+            String filePathNames = Functions.VerifyFile("doctorsNames.txt", true);
 
-            PrintWriter pwDoctor = new PrintWriter(new BufferedWriter(new FileWriter(doctorsDataURL.getPath(), true)));
-            PrintWriter pwDoctorNames = new PrintWriter(new BufferedWriter(new FileWriter(doctorsNamesDataURL.getPath(), true)));
-//            PrintWriter pwDoctor = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\doctors.txt", true)));
-//            PrintWriter pwDoctorNames = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\doctorsNames.txt", true)));
+            PrintWriter pwDoctor = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+            PrintWriter pwDoctorNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
+            
             pwDoctor.println(jTextEmailDoctor.getText());
             pwDoctor.println(jTextNomeDoctor.getText());
             pwDoctor.println(jTextFoneDoctor.getText());
@@ -365,6 +375,12 @@ public class ViewDoctors extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro");
         }
     }//GEN-LAST:event_jSalvarActionPerformed
+
+    private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged
+        if (jTabEdit.getSelectedIndex() == 1) {
+            process.Functions.createListModel("doctorsNames.txt", this.jListDoctors);//Listar quando a tab do listar for selecionada
+        }
+    }//GEN-LAST:event_jTabEditStateChanged
 
     public static void main(String args[]) {
 

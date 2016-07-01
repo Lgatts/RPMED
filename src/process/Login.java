@@ -24,6 +24,7 @@ public class Login {
     
     private static String typeTxt;
     private static String userNameTxt;
+     private static String userEmailTxt;
     
 
     public static String getUserNameTxt() {
@@ -38,25 +39,25 @@ public class Login {
     public static boolean verifyLogin(String userName, char[] passwordArray) {
         
         
-        URL usersDataURL = Login.class.getResource("/data/usersssssss.txt"); //Criando url para o caminho do arquivo txt não influenciar
+        String filePath = Functions.VerifyFile("users.txt", false); //Criando o caminho do arquivo txt com os usuários
         
-        if(usersDataURL == null){
-            usersDataURL = Login.class.getResource("/data/defaultUser.txt");
+        if(filePath == null){
+            filePath = Login.class.getResource("/data/defaultUser.txt").getPath();
         }
         
         String password = "", passwordTxt;
         
         try {
 
-            BufferedReader usersData = new BufferedReader(new FileReader(usersDataURL.getPath()));//Abrindo Arquivo TXT
+            BufferedReader usersData = new BufferedReader(new FileReader(filePath));//Abrindo Arquivo TXT
 
             do {
-
+                userEmailTxt = usersData.readLine();
                 userNameTxt = usersData.readLine();
                 passwordTxt = usersData.readLine();
                 typeTxt = usersData.readLine();
 
-                if (userName.equals(userNameTxt)) { //Coparando o userName com o do Txt
+                if (userName.equals(userEmailTxt)) { //Coparando o userName com o do Txt
 
                     for(int i = 0; i < passwordArray.length; i++){
                         password += passwordArray[i]; // transformando o arrya de char, para uma string;
@@ -75,7 +76,7 @@ public class Login {
                     }
                 }
 
-            } while (userNameTxt != null);
+            } while (userEmailTxt != null);
             
             JOptionPane.showMessageDialog(null,"Email não cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
             
