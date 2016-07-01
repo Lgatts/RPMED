@@ -19,26 +19,8 @@ public class ViewSecretaries extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("RPMed - Secretária(o)s");
 
-        String strLine;
-        try {
-            URL secretariesDataURL = ViewSecretaries.class.getResource("/data/secretariesNames.txt");
-            System.out.println(secretariesDataURL);
-            BufferedReader br = new BufferedReader(new FileReader(secretariesDataURL.getPath()));
-//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Mauricio\\Documents\\NetBeansProjects\\rpmed\\src\\data\\secretaries.txt"));
-            DefaultListModel listModel = new DefaultListModel();
-
-            while ((strLine = br.readLine()) != null) {
-                listModel.addElement(strLine);
-                System.out.println(strLine);
-            }
-
-            jListSecretaries.setModel(listModel);
-
-            br.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(ViewSecretaries.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         URL doctorsDataURL = ViewDoctors.class.getResource("/data/secretariesNames.txt");
+            process.Functions.createListModel(doctorsDataURL,this.jListSecretaries);
     }
 
     @SuppressWarnings("unchecked")

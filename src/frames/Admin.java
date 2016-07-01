@@ -19,25 +19,9 @@ public class Admin extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("RPMed - Usuário(a)s");
 
-        String strLine;
-        try {
-            URL usersDataURL = Admin.class.getResource("/data/usersNames.txt");
-            BufferedReader br = new BufferedReader(new FileReader(usersDataURL.getPath()));
-//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\src\\data\\userNames.txt"));
-            DefaultListModel listModel = new DefaultListModel();
-
-            while ((strLine = br.readLine()) != null) {
-                listModel.addElement(strLine);
-                System.out.println(strLine);
-            }
-
-            jListUsers.setModel(listModel);
-
-            br.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        URL doctorsDataURL = ViewDoctors.class.getResource("/data/userNames.txt");
+        process.Functions.createListModel(doctorsDataURL,this.jListUsers);
+        
     }
 
     @SuppressWarnings("unchecked")

@@ -18,29 +18,11 @@ public class ViewDoctors extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("RPMed - Médico(a)s");
-
-        String strLine;
-        try {
-            URL doctorsDataURL = ViewDoctors.class.getResource("/data/doctorsNames.txt");
-            System.out.println(doctorsDataURL);
-            BufferedReader br = new BufferedReader(new FileReader(doctorsDataURL.getPath()));
-//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Mauricio\\Documents\\NetBeansProjects\\rpmed\\src\\data\\doctors.txt"));
-            DefaultListModel listModel = new DefaultListModel();
-
-            while ((strLine = br.readLine()) != null) {
-                listModel.addElement(strLine);
-                System.out.println(strLine);
-            }
-
-            jListDoctors.setModel(listModel);
-
-            br.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(ViewDoctors.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        URL doctorsDataURL = ViewDoctors.class.getResource("/data/doctorsNames.txt");
+        process.Functions.createListModel(doctorsDataURL,this.jListDoctors);        
+        
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
