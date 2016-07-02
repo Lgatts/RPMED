@@ -30,10 +30,8 @@ public class ViewPatients extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("RPMed - Pacientes");
-        
-        
+
         jTabEdit.setEnabledAt(2, false);
-      
 
     }
 
@@ -113,7 +111,7 @@ public class ViewPatients extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nome:");
+        jLabel1.setText("Nome:*");
 
         jLabel2.setText("RG:");
 
@@ -425,39 +423,43 @@ public class ViewPatients extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String filePath = Functions.VerifyFile("patients.txt", true);
-            String filePathNames = Functions.VerifyFile("patientsNames.txt", true);
-            
-            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));  
-            PrintWriter pwNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
+        if (jPatientName.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha os campos obrigatórios! (*)");
+        } else {
+            try {
+                String filePath = Functions.VerifyFile("patients.txt", true);
+                String filePathNames = Functions.VerifyFile("patientsNames.txt", true);
 
-            pw.println(jPatientName.getText());
-            pw.println(jPatientRg.getText());
-            pw.println(jPatientCpf.getText());
-            pw.println(jPatientFone.getText());
-            pw.println(jPatientEmail.getText());
-            pw.println(jPatientAdress.getText());
-            pw.println(jPatientAdressNumber.getText());
-            
-            //pwNames.println(jPatientName.getText());
-            pwNames.println(jPatientEmail.getText());
-            
-            jPatientName.setText("");
-            jPatientRg.setText("");
-            jPatientCpf.setText("");
-            jPatientFone.setText("");
-            jPatientEmail.setText("");
-            jPatientAdress.setText("");
-            jPatientAdressNumber.setText("");
-            
-            pw.close();
-            pwNames.close();
+                PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+                PrintWriter pwNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
 
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
-        } catch (IOException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro");
+                pw.println(jPatientName.getText());
+                pw.println(jPatientRg.getText());
+                pw.println(jPatientCpf.getText());
+                pw.println(jPatientFone.getText());
+                pw.println(jPatientEmail.getText());
+                pw.println(jPatientAdress.getText());
+                pw.println(jPatientAdressNumber.getText());
+
+                //pwNames.println(jPatientName.getText());
+                pwNames.println(jPatientEmail.getText());
+
+                jPatientName.setText("");
+                jPatientRg.setText("");
+                jPatientCpf.setText("");
+                jPatientFone.setText("");
+                jPatientEmail.setText("");
+                jPatientAdress.setText("");
+                jPatientAdressNumber.setText("");
+
+                pw.close();
+                pwNames.close();
+
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+            } catch (IOException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro");
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -489,9 +491,9 @@ public class ViewPatients extends javax.swing.JFrame {
 
         try {
             String filePath = Functions.VerifyFile("patients.txt", false);
-            
+
             BufferedReader br = new BufferedReader(new FileReader(filePath));
-            
+
             String emailSelected = jListPatients.getSelectedValue();
 
             do {
