@@ -16,14 +16,15 @@ import process.Functions;
 public class ViewDoctors extends javax.swing.JFrame {
 
     public ViewDoctors() {
-        
+
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("RPMed - Médico(a)s");  
-        
+        this.setTitle("RPMed - Médico(a)s");
+
         jTabEdit.setEnabledAt(2, false);
-        
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -75,7 +76,7 @@ public class ViewDoctors extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nome:");
+        jLabel1.setText("Nome:*");
 
         jLabel2.setText("Email:");
 
@@ -135,7 +136,7 @@ public class ViewDoctors extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextEmailDoctor, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                             .addComponent(jTextNomeDoctor))))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,6 +221,11 @@ public class ViewDoctors extends javax.swing.JFrame {
         jTabEdit.addTab("Listar", jPanel2);
 
         jButton4.setText("Salvar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         try {
             jTextFieldCpfDoctorEdit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -229,7 +235,7 @@ public class ViewDoctors extends javax.swing.JFrame {
 
         jLabel5.setText("CPF:");
 
-        jLabel6.setText("Nome:");
+        jLabel6.setText("Nome:*");
 
         jLabel7.setText("Email:");
 
@@ -274,7 +280,7 @@ public class ViewDoctors extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextFieldEmailDoctorEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                             .addComponent(jTextFieldDoctorNameEdit))))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,7 +341,7 @@ public class ViewDoctors extends javax.swing.JFrame {
 
     private void jEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditarActionPerformed
         String name, email, fone, cpf;
-        
+
         jTabEdit.setSelectedIndex(2);
         jTabEdit.setEnabledAt(2, true);
         jTabEdit.setEnabledAt(0, false);
@@ -364,33 +370,37 @@ public class ViewDoctors extends javax.swing.JFrame {
     }//GEN-LAST:event_jEditarActionPerformed
 
     private void jSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalvarActionPerformed
-        try {
-            String filePath = Functions.VerifyFile("doctors.txt", true);
-            String filePathNames = Functions.VerifyFile("doctorsNames.txt", true);
+        if (jTextNomeDoctor.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha os campos obrigatórios! (*)");
+        } else {
+            try {
+                String filePath = Functions.VerifyFile("doctors.txt", true);
+                String filePathNames = Functions.VerifyFile("doctorsNames.txt", true);
 
-            PrintWriter pwDoctor = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-            PrintWriter pwDoctorNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
-            
-            pwDoctor.println(jTextEmailDoctor.getText());
-            pwDoctor.println(jTextNomeDoctor.getText());
-            pwDoctor.println(jTextFoneDoctor.getText());
-            pwDoctor.println(jTextCpfDoctor.getText());
+                PrintWriter pwDoctor = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+                PrintWriter pwDoctorNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
 
-            pwDoctorNames.println(jTextEmailDoctor.getText());
+                pwDoctor.println(jTextEmailDoctor.getText());
+                pwDoctor.println(jTextNomeDoctor.getText());
+                pwDoctor.println(jTextFoneDoctor.getText());
+                pwDoctor.println(jTextCpfDoctor.getText());
 
-            pwDoctor.close();
-            pwDoctorNames.close();
+                pwDoctorNames.println(jTextEmailDoctor.getText());
 
-            jTextNomeDoctor.setText("");
-            jTextEmailDoctor.setText("");
-            jTextFoneDoctor.setText("");
-            jTextCpfDoctor.setText("");
+                pwDoctor.close();
+                pwDoctorNames.close();
 
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+                jTextNomeDoctor.setText("");
+                jTextEmailDoctor.setText("");
+                jTextFoneDoctor.setText("");
+                jTextCpfDoctor.setText("");
 
-        } catch (IOException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro");
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+
+            } catch (IOException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro");
+            }
         }
     }//GEN-LAST:event_jSalvarActionPerformed
 
@@ -406,6 +416,10 @@ public class ViewDoctors extends javax.swing.JFrame {
         this.dispose();
         back.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public static void main(String args[]) {
 

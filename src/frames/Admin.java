@@ -79,15 +79,15 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Tipo:");
+        jLabel1.setText("Tipo:*");
 
-        jLabelNomeUser.setText("Nome:");
+        jLabelNomeUser.setText("Nome:*");
 
-        jLabelMail.setText("E-mail:");
+        jLabelMail.setText("E-mail:*");
 
         jComboBoxTipeUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Médico", "Secretária" }));
 
-        jLabelPassword.setText("Senha:");
+        jLabelPassword.setText("Senha:*");
 
         jButton1.setText("Sair");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -116,18 +116,18 @@ public class Admin extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldEmailUser, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jButton1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButSaveAdd))
+                                .addComponent(jTextFieldEmailUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(jLabel1)
                         .addGap(28, 28, 28)
                         .addComponent(jComboBoxTipeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(49, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButSaveAdd))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,13 +215,13 @@ public class Admin extends javax.swing.JFrame {
 
         jTabEdit.addTab("Listar", jPanel2);
 
-        jLabelUserMailEdit.setText("E-mail:");
+        jLabelUserMailEdit.setText("E-mail:*");
 
-        jLabelEditUser.setText("Nome:");
+        jLabelEditUser.setText("Nome:*");
 
-        jLabelPasswordEdit.setText("Senha:");
+        jLabelPasswordEdit.setText("Senha:*");
 
-        jLabel2.setText("Tipo:");
+        jLabel2.setText("Tipo:*");
 
         jEditType.setText("nada");
 
@@ -256,18 +256,19 @@ public class Admin extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jTextFieldUserNameEdit))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabelPasswordEdit)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPasswordFieldPasswordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabelUserMailEdit)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextFieldEmailUserEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(40, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jEditSave))
+                            .addComponent(jTextFieldEmailUserEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabelPasswordEdit)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jButton3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jEditSave))
+                                .addComponent(jPasswordFieldPasswordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,18 +281,19 @@ public class Admin extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelEditUser)
                     .addComponent(jTextFieldUserNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelUserMailEdit)
                     .addComponent(jTextFieldEmailUserEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPasswordEdit)
                     .addComponent(jPasswordFieldPasswordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jEditSave)))
+                    .addComponent(jEditSave)
+                    .addComponent(jButton3))
+                .addContainerGap())
         );
 
         jTabEdit.addTab("Editar", jPanel3);
@@ -317,42 +319,46 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButSaveAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveAddActionPerformed
-        try {
-            String filePath = Functions.VerifyFile("users.txt", true);
-            String filePathNames = Functions.VerifyFile("usersNames.txt", true);
+        if (jTextFieldEmailUser.getText().trim().equals("") || txtUserName.getText().trim().equals("") || jPasswordFieldPassword.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(null, "Preencha os campos obrigatórios! (*)");
+        } else {
+            try {
+                String filePath = Functions.VerifyFile("users.txt", true);
+                String filePathNames = Functions.VerifyFile("usersNames.txt", true);
 
-            PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-            PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
+                PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+                PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
 
-            pwUser.println(jTextFieldEmailUser.getText());
-            pwUser.println(txtUserName.getText());
-            pwUser.println(jPasswordFieldPassword.getPassword());
+                pwUser.println(jTextFieldEmailUser.getText());
+                pwUser.println(txtUserName.getText());
+                pwUser.println(jPasswordFieldPassword.getPassword());
 
-            switch (jComboBoxTipeUser.getSelectedItem().toString()) {
-                case "Administrador":
-                    pwUser.println("Admin");
-                    break;
-                case "Médico":
-                    pwUser.println("Medic");
-                    break;
-                case "Secretária":
-                    pwUser.println("Secretary");
+                switch (jComboBoxTipeUser.getSelectedItem().toString()) {
+                    case "Administrador":
+                        pwUser.println("Admin");
+                        break;
+                    case "Médico":
+                        pwUser.println("Medic");
+                        break;
+                    case "Secretária":
+                        pwUser.println("Secretary");
+                }
+
+                pwUserNames.println(jTextFieldEmailUser.getText());
+
+                pwUser.close();
+                pwUserNames.close();
+
+                jTextFieldEmailUser.setText("");
+                txtUserName.setText("");
+                jPasswordFieldPassword.setText("");
+                jComboBoxTipeUser.setSelectedItem("Administrador");
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+
+            } catch (IOException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro");
             }
-
-            pwUserNames.println(jTextFieldEmailUser.getText());
-
-            pwUser.close();
-            pwUserNames.close();
-
-            jTextFieldEmailUser.setText("");
-            txtUserName.setText("");
-            jPasswordFieldPassword.setText("");
-            jComboBoxTipeUser.setSelectedItem("Administrador");
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
-
-        } catch (IOException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro");
         }
     }//GEN-LAST:event_jButSaveAddActionPerformed
 

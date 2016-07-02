@@ -80,7 +80,14 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtUserName" min="-2" pref="351" max="-2" attributes="0"/>
                                   <Component id="jPasswordFieldPassword" min="-2" pref="121" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldEmailUser" alignment="0" min="-2" pref="351" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="jButSaveAdd" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jTextFieldEmailUser" alignment="0" min="-2" pref="351" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -90,13 +97,7 @@
                               <Component id="jComboBoxTipeUser" min="-2" pref="350" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="49" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButSaveAdd" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="43" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -144,19 +145,19 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo:"/>
+                <Property name="text" type="java.lang.String" value="Tipo:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelNomeUser">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nome:"/>
+                <Property name="text" type="java.lang.String" value="Nome:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtUserName">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelMail">
               <Properties>
-                <Property name="text" type="java.lang.String" value="E-mail:"/>
+                <Property name="text" type="java.lang.String" value="E-mail:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldEmailUser">
@@ -177,7 +178,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelPassword">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Senha:"/>
+                <Property name="text" type="java.lang.String" value="Senha:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JPasswordField" name="jPasswordFieldPassword">
@@ -315,23 +316,25 @@
                                   <Component id="jTextFieldUserNameEdit" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabelPasswordEdit" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPasswordFieldPasswordEdit" min="-2" pref="107" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabelUserMailEdit" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jTextFieldEmailUserEdit" min="-2" pref="353" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabelPasswordEdit" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="jEditSave" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jPasswordFieldPasswordEdit" min="-2" pref="107" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="40" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jEditSave" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -348,21 +351,22 @@
                           <Component id="jLabelEditUser" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldUserNameEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabelUserMailEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldEmailUserEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabelPasswordEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jPasswordFieldPasswordEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="18" max="32767" attributes="0"/>
+                      <EmptySpace pref="28" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jEditSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -374,24 +378,24 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelUserMailEdit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="E-mail:"/>
+                <Property name="text" type="java.lang.String" value="E-mail:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldUserNameEdit">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelEditUser">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nome:"/>
+                <Property name="text" type="java.lang.String" value="Nome:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelPasswordEdit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Senha:"/>
+                <Property name="text" type="java.lang.String" value="Senha:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo:"/>
+                <Property name="text" type="java.lang.String" value="Tipo:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jEditType">
