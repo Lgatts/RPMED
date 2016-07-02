@@ -9,11 +9,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
 import process.Functions;
 
 public class Admin extends javax.swing.JFrame {
+
+    private static String emailToEdit;
 
     public Admin() {
         initComponents();
@@ -55,7 +62,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jEditType = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jButSaveEdit = new javax.swing.JButton();
+        jEditSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -225,6 +232,13 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        jEditSave.setText("Salvar");
+        jEditSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEditSaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -249,10 +263,11 @@ public class Admin extends javax.swing.JFrame {
                             .addComponent(jLabelUserMailEdit)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jTextFieldEmailUserEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jButton3)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jEditSave))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,43 +289,28 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(jLabelPasswordEdit)
                     .addComponent(jPasswordFieldPasswordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jButton3))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jEditSave)))
         );
 
         jTabEdit.addTab("Editar", jPanel3);
-
-        jButSaveEdit.setText("Salvar");
-        jButSaveEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButSaveEditActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(440, Short.MAX_VALUE)
-                .addComponent(jButSaveEdit)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(256, Short.MAX_VALUE)
-                .addComponent(jButSaveEdit)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabEdit)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabEdit)
-                    .addContainerGap()))
         );
 
         pack();
@@ -379,6 +379,9 @@ public class Admin extends javax.swing.JFrame {
 
             jTextFieldUserNameEdit.setText(name);
             jTextFieldEmailUserEdit.setText(email);
+
+            emailToEdit = email;
+
             jPasswordFieldPasswordEdit.setText(password);
             jEditType.setText(type);
 
@@ -386,11 +389,8 @@ public class Admin extends javax.swing.JFrame {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
     }//GEN-LAST:event_jButEditActionPerformed
-
-    private void jButSaveEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveEditActionPerformed
-
-    }//GEN-LAST:event_jButSaveEditActionPerformed
 
     private void jButDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButDelActionPerformed
 
@@ -410,13 +410,44 @@ public class Admin extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jEditSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditSaveActionPerformed
+
+        List<String> contentToEdit = new ArrayList();
+
+        String password = "";//Essa parte é necessario porque o campo de password retorna um arrya de chars e deve ser convertido para string dessa forma
+        char[] passwordArray = jPasswordFieldPasswordEdit.getPassword();
+
+        for (int i = 0; i < passwordArray.length; i++) {
+            password = password + passwordArray[i];
+        }
+
+        contentToEdit.add(jTextFieldEmailUserEdit.getText());
+        contentToEdit.add(jTextFieldUserNameEdit.getText());
+        contentToEdit.add(password);
+        contentToEdit.add(jEditType.getText());
+
+        Functions.Edit("users.txt", contentToEdit, emailToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
+
+        contentToEdit.clear();
+        contentToEdit.add(jTextFieldEmailUserEdit.getText());
+
+        Functions.Edit("usersNames.txt", contentToEdit, emailToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
+
+        jTabEdit.setSelectedIndex(1);
+        jTabEdit.setEnabledAt(2, false);
+        jTabEdit.setEnabledAt(0, true);
+        jTabEdit.setEnabledAt(1, true);
+
+
+    }//GEN-LAST:event_jEditSaveActionPerformed
 
     public static void main(String args[]) {
 
@@ -431,11 +462,11 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton jButDel;
     private javax.swing.JButton jButEdit;
     private javax.swing.JButton jButSaveAdd;
-    private javax.swing.JButton jButSaveEdit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBoxTipeUser;
+    private javax.swing.JButton jEditSave;
     private javax.swing.JLabel jEditType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -10,6 +10,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -23,7 +29,7 @@ public class Functions {
 
     public static void createListModel(String fileName, javax.swing.JList<String> jList) {
 
-        String filePath = VerifyFile(fileName,false);
+        String filePath = VerifyFile(fileName, false);
 
         if (filePath != null) {
             try {
@@ -60,16 +66,51 @@ public class Functions {
         String filePath = null;
 
         if (writer == true) {
-            
-            filePath = System.getenv("APPDATA") + "\\.RpMed" +"\\"+ fileName;
-            
-        } else if (new File(System.getenv("APPDATA") + "\\.RpMed" +"\\"+ fileName).exists()) {
 
-            filePath = System.getenv("APPDATA") + "\\.RpMed" +"\\"+ fileName;
+            filePath = System.getenv("APPDATA") + "\\.RpMed" + "\\" + fileName;
+
+        } else if (new File(System.getenv("APPDATA") + "\\.RpMed" + "\\" + fileName).exists()) {
+
+            filePath = System.getenv("APPDATA") + "\\.RpMed" + "\\" + fileName;
 
         }
         return filePath;
 
+    }
+
+    public static void Edit(String fileName, List contentsToEdit, String emailToEdit) {
+        
+        Path filePath = Paths.get(VerifyFile(fileName, false));        
+        
+        
+        
+        try {
+            List<String> fileContent;
+            
+            fileContent = new ArrayList<>(Files.readAllLines(filePath, StandardCharsets.UTF_8));
+        
+
+        for (int i = 0; i < fileContent.size(); i = i+contentsToEdit.size()) {
+            if (fileContent.get(i).equals(emailToEdit)) {
+                
+                for(int j = 0;j < contentsToEdit.size();j++){
+                    fileContent.set(i+j,(String)contentsToEdit.get(j));
+                }
+                
+                break;
+            }
+        }
+        
+        
+         Files.write(filePath, fileContent, StandardCharsets.UTF_8);
+        
+        
+        } catch (IOException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+       
     }
 
 }
