@@ -393,7 +393,12 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButEditActionPerformed
 
     private void jButDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButDelActionPerformed
-
+        
+        emailToEdit = jListUsers.getSelectedValue();
+        
+        Functions.Delete("users.txt",4, emailToEdit);
+        Functions.Delete("usersNames.txt",1, emailToEdit);
+        process.Functions.createListModel("usersNames.txt", this.jListUsers);
     }//GEN-LAST:event_jButDelActionPerformed
 
     private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged

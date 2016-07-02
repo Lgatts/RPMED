@@ -112,5 +112,41 @@ public class Functions {
         
        
     }
+    
+    public static void Delete(String fileName, int nParameters, String emailToEdit) {
+        
+        Path filePath = Paths.get(VerifyFile(fileName, false));        
+        
+        
+        
+        try {
+            List<String> fileContent;
+            
+            fileContent = new ArrayList<>(Files.readAllLines(filePath, StandardCharsets.UTF_8));
+        
+
+        for (int i = 0; i < fileContent.size(); i = i+nParameters) {
+            if (fileContent.get(i).equals(emailToEdit)) {
+                
+                for(int j = 0;j < nParameters;j++){
+                    fileContent.remove(i);
+                }
+                
+                break;
+            }
+        }
+        
+        
+         Files.write(filePath, fileContent, StandardCharsets.UTF_8);
+        
+        
+        } catch (IOException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+       
+    }
+    
 
 }
