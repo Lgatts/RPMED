@@ -293,7 +293,7 @@ public class ViewPatients extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Nome:");
+        jLabel8.setText("Nome:*");
 
         jLabel9.setText("RG:");
 

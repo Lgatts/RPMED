@@ -79,7 +79,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nome:");
+        jLabel1.setText("Nome:*");
 
         jLabel2.setText("E-mail:");
 
@@ -128,7 +128,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
                                     .addComponent(jTextEmailSecretaries, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jTextFoneSecretaries, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                                         .addComponent(jLabel4)
                                         .addGap(18, 18, 18)
                                         .addComponent(jTextCpfSecretaries, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -216,7 +216,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
 
         jTabEdit.addTab("Listar", jPanel2);
 
-        jLabel5.setText("Nome:");
+        jLabel5.setText("Nome:*");
 
         jLabel6.setText("E-mail:");
 
@@ -239,6 +239,11 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jButton4.setText("Voltar");
 
         jSalvar.setText("Salvar");
+        jSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -260,7 +265,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
                     .addComponent(jTextFieldSecretariesNameEdit)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jTextFieldFoneSecretariesEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldCpfSecretariesEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -398,6 +403,10 @@ public class ViewSecretaries extends javax.swing.JFrame {
         this.dispose();
         back.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSalvarActionPerformed
 
     public static void main(String args[]) {
 
