@@ -237,6 +237,11 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jLabel8.setText("CPF:");
 
         jButton4.setText("Voltar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jSalvar.setText("Salvar");
         jSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -407,6 +412,14 @@ public class ViewSecretaries extends javax.swing.JFrame {
     private void jSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalvarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jSalvarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jTabEdit.setSelectedIndex(1);
+        jTabEdit.setEnabledAt(2, false);
+        jTabEdit.setEnabledAt(0, true);
+        jTabEdit.setEnabledAt(1, true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public static void main(String args[]) {
 
