@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,7 +28,8 @@ public class ViewPatients extends javax.swing.JFrame {
     /**
      * Creates new form Register_Pacients
      */
-    public ViewPatients() {
+    private static String nameToEdit;
+    public ViewPatients(){
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("RPMed - Pacientes");
@@ -72,7 +75,7 @@ public class ViewPatients extends javax.swing.JFrame {
         jDelete = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        jEditSavePatients = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -227,6 +230,11 @@ public class ViewPatients extends javax.swing.JFrame {
         });
 
         jDelete.setText("Deletar");
+        jDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDeleteActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Voltar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -287,10 +295,10 @@ public class ViewPatients extends javax.swing.JFrame {
 
         jTabEdit.addTab("Listar", jTabList);
 
-        jButton2.setText("Salvar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jEditSavePatients.setText("Salvar");
+        jEditSavePatients.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jEditSavePatientsActionPerformed(evt);
             }
         });
 
@@ -357,7 +365,7 @@ public class ViewPatients extends javax.swing.JFrame {
                                     .addComponent(jLabel13)
                                     .addGap(18, 18, 18)
                                     .addComponent(jEditPatientFone, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton2)))
+                            .addComponent(jEditSavePatients)))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jEditPatientName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel5Layout.createSequentialGroup()
@@ -397,7 +405,7 @@ public class ViewPatients extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(jEditSavePatients))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -443,7 +451,7 @@ public class ViewPatients extends javax.swing.JFrame {
                 pw.println(jPatientAdressNumber.getText());
 
                 //pwNames.println(jPatientName.getText());
-                pwNames.println(jPatientEmail.getText());
+                pwNames.println(jPatientName.getText());
 
                 jPatientName.setText("");
                 jPatientRg.setText("");
@@ -464,9 +472,28 @@ public class ViewPatients extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jEditSavePatientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditSavePatientsActionPerformed
+       List<String> contentToEdit = new ArrayList();
+
+        contentToEdit.add(jEditPatientName.getText());
+        contentToEdit.add(jEditPatientRg.getText());
+        contentToEdit.add(jEditPatientCpf.getText());
+        contentToEdit.add(jEditPatientAdress.getText());
+        contentToEdit.add(jEditPatientAdressNumber.getText());
+        contentToEdit.add(jEditPatientFone.getText());
+
+        Functions.Edit("patients.txt", contentToEdit, nameToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
+
+        contentToEdit.clear();
+        contentToEdit.add(jEditPatientName.getText());
+
+        Functions.Edit("patientsNames.txt", contentToEdit, nameToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
+
+        jTabEdit.setSelectedIndex(1);
+        jTabEdit.setEnabledAt(2, false);
+        jTabEdit.setEnabledAt(0, true);
+        jTabEdit.setEnabledAt(1, true);
+    }//GEN-LAST:event_jEditSavePatientsActionPerformed
 
     private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
         // TODO add your handling code here:
@@ -496,7 +523,7 @@ public class ViewPatients extends javax.swing.JFrame {
 
             BufferedReader br = new BufferedReader(new FileReader(filePath));
 
-            String emailSelected = jListPatients.getSelectedValue();
+            String nameSelected = jListPatients.getSelectedValue();
 
             do {
 
@@ -508,7 +535,9 @@ public class ViewPatients extends javax.swing.JFrame {
                 adress = br.readLine();
                 adressNumber = br.readLine();
 
-            } while (!(email.equals(emailSelected)));
+            } while (!(name.equals(nameSelected)));
+            
+            nameToEdit = name;
 
             jEditPatientName.setText(name);
             jEditPatientRg.setText(rg);
@@ -535,6 +564,14 @@ public class ViewPatients extends javax.swing.JFrame {
         this.dispose();
         back.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeleteActionPerformed
+       nameToEdit = jListPatients.getSelectedValue();
+        
+        Functions.Delete("patients.txt",7, nameToEdit);
+        Functions.Delete("patientsNames.txt",1, nameToEdit);
+        process.Functions.createListModel("patientsNames.txt", this.jListPatients);
+    }//GEN-LAST:event_jDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -577,7 +614,6 @@ public class ViewPatients extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Voltar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jDelete;
@@ -588,6 +624,7 @@ public class ViewPatients extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jEditPatientFone;
     private javax.swing.JTextField jEditPatientName;
     private javax.swing.JTextField jEditPatientRg;
+    private javax.swing.JButton jEditSavePatients;
     private javax.swing.JButton jEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
