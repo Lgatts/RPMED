@@ -33,6 +33,8 @@ public class User extends javax.swing.JFrame {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setLocationRelativeTo(null);
+        
+        process.Functions.createListModel("consultations.txt", jListPanelUser);
 
     }
 
