@@ -21,9 +21,8 @@ public class User extends javax.swing.JFrame {
     /**
      * Creates new form Medic
      */
-    public User() {
-        initComponents();
-        initComponents();
+    public User() {        
+        initComponents();        
         URL imagePath = this.getClass().getResource("/images/RPIcon2.png");
         this.setTitle("RPMed");
         try {
@@ -62,11 +61,6 @@ public class User extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jListPanelUser.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jListPanelUser);
 
         jMenu1.setText("Opções");
