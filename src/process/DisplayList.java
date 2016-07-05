@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import static process.Functions.VerifyFile;
+import users.Consult;
 import users.Doctor;
 import users.Patient;
 import users.Secretary;
@@ -30,6 +31,11 @@ public class DisplayList {
     private List<Doctor> doctors = new ArrayList<Doctor>();
     private List<Secretary> secretaries = new ArrayList<Secretary>();
     private List<Patient> patients = new ArrayList<Patient>();
+    private List<Consult> consults = new ArrayList<Consult>();
+
+    public List<Consult> getConsults() {
+        return consults;
+    }
     
     private String typeUser;
 
@@ -98,6 +104,13 @@ public class DisplayList {
                             patients.add(patient);
                         }
                         break;
+                    case"consultation.txt":
+                        typeUser = "consult";
+                        while ((srt = br.readLine()) != null) {
+                            Consult consult = new Consult(srt, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine());
+                            consults.add(consult);
+                        }
+                        break;
 
                 }
 
@@ -134,6 +147,12 @@ public class DisplayList {
                     listModel.addElement(patient.name);
                 }
                 break;
+            case "consult":
+                for (Consult consult : consults) {
+                    listModel.addElement(consult.id);
+                }
+                break;
+                
         }
 
         jList.setModel(listModel);

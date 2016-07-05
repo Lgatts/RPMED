@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import process.DisplayList;
 import process.Functions;
 
@@ -35,6 +36,8 @@ public class ViewDoctors extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jMenuRight = new javax.swing.JPopupMenu();
+        jDetails = new javax.swing.JMenuItem();
         jTabEdit = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -71,6 +74,9 @@ public class ViewDoctors extends javax.swing.JFrame {
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(jList1);
+
+        jDetails.setText("Ver Detalhes");
+        jMenuRight.add(jDetails);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -171,6 +177,11 @@ public class ViewDoctors extends javax.swing.JFrame {
         jListDoctors.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jListDoctorsFocusGained(evt);
+            }
+        });
+        jListDoctors.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListDoctorsMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(jListDoctors);
@@ -455,7 +466,7 @@ public class ViewDoctors extends javax.swing.JFrame {
 
     private void jDeletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeletActionPerformed
 
-        doctors = display.getDoctors();        
+        doctors = display.getDoctors();
         users.Doctor doctor = doctors.get(jListDoctors.getSelectedIndex());
         idToEdit = doctor.id;
 
@@ -471,6 +482,39 @@ public class ViewDoctors extends javax.swing.JFrame {
         jEditar.setEnabled(true);
     }//GEN-LAST:event_jListDoctorsFocusGained
 
+    private void jListDoctorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListDoctorsMouseClicked
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            jMenuRight.setVisible(false);
+            if (evt.getClickCount() == 2) {
+                jMenuRight.setVisible(false);
+                int index = jListDoctors.locationToIndex(evt.getPoint());
+                
+                doctors = display.getDoctors(); // Busca a lista de users criadas para listar         
+                users.Doctor doctor = doctors.get(index); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+                idToEdit = doctor.id;
+
+                jEditDoctorEmail.setText(doctor.email);
+                jEditDoctorCpf.setText(doctor.cpf);
+                jEditDoctorFone.setText(doctor.fone);
+                jEditDoctorName.setText(doctor.name);
+
+                jTabEdit.setSelectedIndex(2);
+                jTabEdit.setEnabledAt(2, true);
+                jTabEdit.setEnabledAt(0, false);
+                jTabEdit.setEnabledAt(1, false);
+                
+            }
+        }
+        if (SwingUtilities.isRightMouseButton(evt)) {
+
+            int index = jListDoctors.locationToIndex(evt.getPoint());
+            jListDoctors.setSelectedIndex(index);
+            jMenuRight.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
+            jMenuRight.setVisible(true);
+
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jListDoctorsMouseClicked
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -483,6 +527,7 @@ public class ViewDoctors extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jDelet;
+    private javax.swing.JMenuItem jDetails;
     private javax.swing.JFormattedTextField jEditDoctorCpf;
     private javax.swing.JTextField jEditDoctorEmail;
     private javax.swing.JFormattedTextField jEditDoctorFone;
@@ -498,6 +543,7 @@ public class ViewDoctors extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jListDoctors;
+    private javax.swing.JPopupMenu jMenuRight;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

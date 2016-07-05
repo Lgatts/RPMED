@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import process.Functions;
+import users.SelectedConsult;
 
 
 /**
@@ -434,7 +436,11 @@ public class Consultations extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTabbedPane1.getSelectedIndex() == 1) {
             process.Functions.createListModel("consultations.txt", this.jListConsultations);//Listar quando a tab do listar for selecionada
+            if( SelectedConsult.getIndex() >=0){
+                jListConsultations.setSelectedIndex(SelectedConsult.getIndex());
+            }            
         }
+        
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -635,6 +641,12 @@ public class Consultations extends javax.swing.JFrame {
             }
         });
     }
+
+    public JTabbedPane getjTabbedPane1() {
+        return jTabbedPane1;
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddSave;

@@ -5,12 +5,21 @@
  */
 package frames;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import process.DisplayList;
+import process.Functions;
+import users.Consult;
+import users.SelectedConsult;
 
 /**
  *
@@ -18,11 +27,14 @@ import javax.imageio.ImageIO;
  */
 public class User extends javax.swing.JFrame {
 
+    private DisplayList display = new DisplayList();
+    private List<users.Consult> consults = new ArrayList<users.Consult>();
+
     /**
      * Creates new form Medic
      */
-    public User() {        
-        initComponents();        
+    public User() {
+        initComponents();
         URL imagePath = this.getClass().getResource("/images/RPIcon2.png");
         this.setTitle("RPMed");
         try {
@@ -33,9 +45,14 @@ public class User extends javax.swing.JFrame {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setLocationRelativeTo(null);
-        
-        process.Functions.createListModel("consultations.txt", jListPanelUser);
 
+        String path = Functions.VerifyFile("consultation.txt", false);
+        if (path != null) {
+            display.createElement("consultation.txt");
+            display.createListModel(jListPanelUser);
+        } else {
+            JOptionPane.showMessageDialog(null, "Não existe nenhum cadastro", "Erro", JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
     /**
@@ -47,8 +64,8 @@ public class User extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        jButton1 = new javax.swing.JButton();
+        jMenuRight = new javax.swing.JPopupMenu();
+        jDetails = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListPanelUser = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -59,10 +76,21 @@ public class User extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
 
-        jButton1.setText("jButton1");
+        jDetails.setText("Ver detalhes");
+        jDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDetailsActionPerformed(evt);
+            }
+        });
+        jMenuRight.add(jDetails);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jListPanelUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListPanelUserMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListPanelUser);
 
         jMenu1.setText("Opções");
@@ -141,7 +169,8 @@ public class User extends javax.swing.JFrame {
         this.dispose();
         ViewDoctors view = new ViewDoctors();
         view.setVisible(true);
-        
+        display.clearList();
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -149,7 +178,8 @@ public class User extends javax.swing.JFrame {
         this.dispose();
         ViewPatients view = new ViewPatients();
         view.setVisible(true);
-        
+        display.clearList();
+
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -157,13 +187,15 @@ public class User extends javax.swing.JFrame {
         this.dispose();
         Consultations newConsult = new Consultations();
         newConsult.setVisible(true);
+        display.clearList();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        Login exit = new Login ();
+        Login exit = new Login();
         exit.setVisible(true);
         this.dispose();
+        display.clearList();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -171,7 +203,39 @@ public class User extends javax.swing.JFrame {
         this.dispose();
         ViewSecretaries view = new ViewSecretaries();
         view.setVisible(true);
+        display.clearList();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jListPanelUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListPanelUserMouseClicked
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            jMenuRight.setVisible(false);
+            if (evt.getClickCount() == 2) {
+                jMenuRight.setVisible(false);
+                int index = jListPanelUser.locationToIndex(evt.getPoint());
+                SelectedConsult.setIndex(index);
+                Consultations con = new Consultations();
+                con.getjTabbedPane1().setSelectedIndex(1);
+                con.setVisible(true);
+
+                this.dispose();
+            }
+        }
+        if (SwingUtilities.isRightMouseButton(evt)) {
+
+            int index = jListPanelUser.locationToIndex(evt.getPoint());
+            jListPanelUser.setSelectedIndex(index);
+            jMenuRight.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
+            jMenuRight.setVisible(true);
+            System.out.println("Foi clicado sobre o " + index);
+        }
+    }//GEN-LAST:event_jListPanelUserMouseClicked
+
+    private void jDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDetailsActionPerformed
+       Consult consult = display.getConsults().get(jListPanelUser.getSelectedIndex());
+       SelectedConsult.setConsult(consult);
+       new ConsultationDetails().setVisible(true);
+       jMenuRight.setVisible(false);
+    }//GEN-LAST:event_jDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,16 +251,24 @@ public class User extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(User.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(User.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(User.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(User.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -216,7 +288,7 @@ public class User extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JMenuItem jDetails;
     private javax.swing.JList<String> jListPanelUser;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -225,7 +297,7 @@ public class User extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jMenuRight;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
