@@ -92,9 +92,9 @@ public class Consultations extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Horário de início: ");
+        jLabel1.setText("Horário de início: *");
 
-        jLabel3.setText("Nome do paciente: ");
+        jLabel3.setText("Nome do paciente: *");
 
         NameAddP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,7 +102,7 @@ public class Consultations extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Nome do médico:");
+        jLabel4.setText("Nome do médico:*");
 
         NameAddM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,7 +110,7 @@ public class Consultations extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Data:");
+        jLabel5.setText("Data:*");
 
         jButton1.setText("Voltar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +130,7 @@ public class Consultations extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Horário de término: ");
+        jLabel8.setText("Horário de término: *");
 
         AddSave.setText("Salvar");
         AddSave.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +180,6 @@ public class Consultations extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(233, 233, 233)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AddSave)
                 .addContainerGap())
         );
@@ -274,9 +273,9 @@ public class Consultations extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Listar", jPanel2);
 
-        jLabel6.setText("Horário de início: ");
+        jLabel6.setText("Horário de início: *");
 
-        jLabel10.setText("Nome do paciente: ");
+        jLabel10.setText("Nome do paciente:* ");
 
         NameEditP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,7 +283,7 @@ public class Consultations extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setText("Nome do médico:");
+        jLabel11.setText("Nome do médico:*");
 
         NameEditM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -292,7 +291,7 @@ public class Consultations extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setText("Data:");
+        jLabel12.setText("Data:*");
 
         jButton6.setText("Voltar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +311,7 @@ public class Consultations extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setText("Horário de término: ");
+        jLabel13.setText("Horário de término:* ");
 
         jButton7.setText("Salvar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -440,27 +439,31 @@ public class Consultations extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        String id = (DateEdit.getText()+" | "+startHourEdit.getText()+" | "+NameEditP.getText());
-        List<String> contentToEdit = new ArrayList();
+        if (DateEdit.getText().equals("  /  /    ") || startHourEdit.getText().equals("  :  ") || finishHourEdit.getText().equals("  :  ") || NameEditP.getText().trim().equals("") || NameEditM.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Para concluir a edição de uma consulta é necessário preencher todos os campos obrigatórios! (*)");
+        }else {
+            String id = (DateEdit.getText()+" | "+startHourEdit.getText()+" | "+NameEditP.getText());
+            List<String> contentToEdit = new ArrayList();
 
-        contentToEdit.add(id);
-        contentToEdit.add(DateEdit.getText());
-        contentToEdit.add(startHourEdit.getText());
-        contentToEdit.add(finishHourEdit.getText());
-        contentToEdit.add(NameEditP.getText());
-        contentToEdit.add(NameEditM.getText());
+            contentToEdit.add(id);
+            contentToEdit.add(DateEdit.getText());
+            contentToEdit.add(startHourEdit.getText());
+            contentToEdit.add(finishHourEdit.getText());
+            contentToEdit.add(NameEditP.getText());
+            contentToEdit.add(NameEditM.getText());
 
-        Functions.Edit("consultation.txt", contentToEdit, idToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
+            Functions.Edit("consultation.txt", contentToEdit, idToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
 
-        contentToEdit.clear();
-        contentToEdit.add(id);
+            contentToEdit.clear();
+            contentToEdit.add(id);
 
-        Functions.Edit("consultations.txt", contentToEdit, idToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
+            Functions.Edit("consultations.txt", contentToEdit, idToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
 
-        jTabbedPane1.setSelectedIndex(1);
-        jTabbedPane1.setEnabledAt(2, false);
-        jTabbedPane1.setEnabledAt(0, true);
-        jTabbedPane1.setEnabledAt(1, true);
+            jTabbedPane1.setSelectedIndex(1);
+            jTabbedPane1.setEnabledAt(2, false);
+            jTabbedPane1.setEnabledAt(0, true);
+            jTabbedPane1.setEnabledAt(1, true);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void DateEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateEditActionPerformed
@@ -536,35 +539,39 @@ public class Consultations extends javax.swing.JFrame {
 
     private void AddSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddSaveActionPerformed
         // TODO add your handling code here:
-        try {
-            String filePath = Functions.VerifyFile("consultation.txt", true);
-            String filePathNames = Functions.VerifyFile("consultations.txt", true);
+        if (DateAdd.getText().equals("  /  /    ") || startHour.getText().equals("  :  ") || finishHour.getText().equals("  :  ") || NameAddP.getText().trim().equals("") || NameAddM.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Para concluir o cadastro de uma nova consulta é necessário preencher todos os campos obrigatórios! (*)");
+        }else {
+            try {
+                String filePath = Functions.VerifyFile("consultation.txt", true);
+                String filePathNames = Functions.VerifyFile("consultations.txt", true);
 
-            PrintWriter pwConsultation = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-            PrintWriter pwConsultations = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
+                PrintWriter pwConsultation = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+                PrintWriter pwConsultations = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
 
-            pwConsultation.println(DateAdd.getText()+" | "+startHour.getText()+" | "+NameAddP.getText());
-            pwConsultation.println(DateAdd.getText());
-            pwConsultation.println(startHour.getText());
-            pwConsultation.println(finishHour.getText());
-            pwConsultation.println(NameAddP.getText());
-            pwConsultation.println(NameAddM.getText());
+                pwConsultation.println(DateAdd.getText()+" | "+startHour.getText()+" | "+NameAddP.getText());
+                pwConsultation.println(DateAdd.getText());
+                pwConsultation.println(startHour.getText());
+                pwConsultation.println(finishHour.getText());
+                pwConsultation.println(NameAddP.getText());
+                pwConsultation.println(NameAddM.getText());
 
-            pwConsultations.println(DateAdd.getText()+" | "+startHour.getText()+" | "+NameAddP.getText());
+                pwConsultations.println(DateAdd.getText()+" | "+startHour.getText()+" | "+NameAddP.getText());
 
-            pwConsultation.close();
-            pwConsultations.close();
+                pwConsultation.close();
+                pwConsultations.close();
 
-            DateAdd.setText("");
-            startHour.setText("");
-            finishHour.setText("");
-            NameAddP.setText("");
-            NameAddM.setText("");
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+                DateAdd.setText("");
+                startHour.setText("");
+                finishHour.setText("");
+                NameAddP.setText("");
+                NameAddM.setText("");
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
 
-        } catch (IOException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro");
+            } catch (IOException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro");
+            }
         }
     }//GEN-LAST:event_AddSaveActionPerformed
 

@@ -90,7 +90,6 @@
                               <EmptySpace min="233" pref="233" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="AddSave" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -137,12 +136,12 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Hor&#xe1;rio de in&#xed;cio: "/>
+                <Property name="text" type="java.lang.String" value="Hor&#xe1;rio de in&#xed;cio: *"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nome do paciente: "/>
+                <Property name="text" type="java.lang.String" value="Nome do paciente: *"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="NameAddP">
@@ -152,7 +151,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nome do m&#xe9;dico:"/>
+                <Property name="text" type="java.lang.String" value="Nome do m&#xe9;dico:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="NameAddM">
@@ -162,7 +161,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Data:"/>
+                <Property name="text" type="java.lang.String" value="Data:*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
@@ -185,7 +184,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Hor&#xe1;rio de t&#xe9;rmino: "/>
+                <Property name="text" type="java.lang.String" value="Hor&#xe1;rio de t&#xe9;rmino: *"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="AddSave">
@@ -425,12 +424,12 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel6">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Hor&#xe1;rio de in&#xed;cio: "/>
+                    <Property name="text" type="java.lang.String" value="Hor&#xe1;rio de in&#xed;cio: *"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel10">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Nome do paciente: "/>
+                    <Property name="text" type="java.lang.String" value="Nome do paciente:* "/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="NameEditP">
@@ -440,7 +439,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Nome do m&#xe9;dico:"/>
+                    <Property name="text" type="java.lang.String" value="Nome do m&#xe9;dico:*"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="NameEditM">
@@ -450,7 +449,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel12">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Data:"/>
+                    <Property name="text" type="java.lang.String" value="Data:*"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton6">
@@ -473,7 +472,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel13">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Hor&#xe1;rio de t&#xe9;rmino: "/>
+                    <Property name="text" type="java.lang.String" value="Hor&#xe1;rio de t&#xe9;rmino:* "/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton7">
