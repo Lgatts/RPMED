@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -15,6 +17,8 @@ import process.Functions;
 
 public class ViewDoctors extends javax.swing.JFrame {
 
+    
+    private static String emailToEdit;
     public ViewDoctors() {
 
         initComponents();
@@ -47,18 +51,18 @@ public class ViewDoctors extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jListDoctors = new javax.swing.JList<>();
         jEditar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jDelet = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jTextFieldCpfDoctorEdit = new javax.swing.JFormattedTextField();
+        jSaveEditDoctor = new javax.swing.JButton();
+        jEditDoctorCpf = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldEmailDoctorEdit = new javax.swing.JTextField();
-        jTextFieldDoctorNameEdit = new javax.swing.JTextField();
+        jEditDoctorEmail = new javax.swing.JTextField();
+        jEditDoctorName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextFieldFoneDoctorEdit = new javax.swing.JFormattedTextField();
+        jEditDoctorFone = new javax.swing.JFormattedTextField();
         jToggleButton2 = new javax.swing.JToggleButton();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -136,7 +140,7 @@ public class ViewDoctors extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextEmailDoctor, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                             .addComponent(jTextNomeDoctor))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +177,12 @@ public class ViewDoctors extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Deletar");
+        jDelet.setText("Deletar");
+        jDelet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDeletActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Voltar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -191,7 +200,7 @@ public class ViewDoctors extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDelet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -209,7 +218,7 @@ public class ViewDoctors extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jEditar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(jDelet)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -220,15 +229,15 @@ public class ViewDoctors extends javax.swing.JFrame {
 
         jTabEdit.addTab("Listar", jPanel2);
 
-        jButton4.setText("Salvar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jSaveEditDoctor.setText("Salvar");
+        jSaveEditDoctor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jSaveEditDoctorActionPerformed(evt);
             }
         });
 
         try {
-            jTextFieldCpfDoctorEdit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jEditDoctorCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -242,7 +251,7 @@ public class ViewDoctors extends javax.swing.JFrame {
         jLabel8.setText("Fone:");
 
         try {
-            jTextFieldFoneDoctorEdit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+            jEditDoctorFone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -269,18 +278,18 @@ public class ViewDoctors extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jToggleButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4))
+                        .addComponent(jSaveEditDoctor))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(jTextFieldFoneDoctorEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jEditDoctorFone, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(67, 67, 67)
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextFieldCpfDoctorEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jEditDoctorCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextFieldEmailDoctorEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                            .addComponent(jTextFieldDoctorNameEdit))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                            .addComponent(jEditDoctorEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                            .addComponent(jEditDoctorName))))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,21 +297,21 @@ public class ViewDoctors extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextFieldDoctorNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jEditDoctorName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextFieldEmailDoctorEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jEditDoctorEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldFoneDoctorEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEditDoctorFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel5)
-                    .addComponent(jTextFieldCpfDoctorEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jEditDoctorCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jToggleButton2)
-                    .addComponent(jButton4))
+                    .addComponent(jSaveEditDoctor))
                 .addContainerGap())
         );
 
@@ -363,10 +372,12 @@ public class ViewDoctors extends javax.swing.JFrame {
                 cpf = br.readLine();
             } while (!(email.equals(emailSelected)));
 
-            jTextFieldEmailDoctorEdit.setText(email);
-            jTextFieldDoctorNameEdit.setText(name);
-            jTextFieldFoneDoctorEdit.setText(fone);
-            jTextFieldCpfDoctorEdit.setText(cpf);
+            emailToEdit = email;
+            
+            jEditDoctorEmail.setText(email);
+            jEditDoctorName.setText(name);
+            jEditDoctorFone.setText(fone);
+            jEditDoctorCpf.setText(cpf);
 
         } catch (IOException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
@@ -394,8 +405,8 @@ public class ViewDoctors extends javax.swing.JFrame {
                 pwDoctor.close();
                 pwDoctorNames.close();
 
-                jTextNomeDoctor.setText("");
                 jTextEmailDoctor.setText("");
+                jTextNomeDoctor.setText("");
                 jTextFoneDoctor.setText("");
                 jTextCpfDoctor.setText("");
 
@@ -421,9 +432,34 @@ public class ViewDoctors extends javax.swing.JFrame {
         back.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void jSaveEditDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSaveEditDoctorActionPerformed
+        List<String> contentToEdit = new ArrayList();
+
+        contentToEdit.add(jEditDoctorEmail.getText());
+        contentToEdit.add(jEditDoctorName.getText());
+        contentToEdit.add(jEditDoctorFone.getText());
+        contentToEdit.add(jEditDoctorCpf.getText());
+        
+        Functions.Edit("doctors.txt", contentToEdit, emailToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
+
+        contentToEdit.clear();
+        contentToEdit.add(jEditDoctorEmail.getText());
+
+        Functions.Edit("doctorsNames.txt", contentToEdit, emailToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
+
+        jTabEdit.setSelectedIndex(1);
+        jTabEdit.setEnabledAt(2, false);
+        jTabEdit.setEnabledAt(0, true);
+        jTabEdit.setEnabledAt(1, true);
+    }//GEN-LAST:event_jSaveEditDoctorActionPerformed
+
+    private void jDeletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeletActionPerformed
+        emailToEdit = jListDoctors.getSelectedValue();
+        
+        Functions.Delete("doctors.txt",4, emailToEdit);
+        Functions.Delete("doctorsNames.txt",1, emailToEdit);
+        process.Functions.createListModel("doctorsNames.txt", this.jListDoctors);
+    }//GEN-LAST:event_jDeletActionPerformed
 
     public static void main(String args[]) {
 
@@ -436,8 +472,11 @@ public class ViewDoctors extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jDelet;
+    private javax.swing.JFormattedTextField jEditDoctorCpf;
+    private javax.swing.JTextField jEditDoctorEmail;
+    private javax.swing.JFormattedTextField jEditDoctorFone;
+    private javax.swing.JTextField jEditDoctorName;
     private javax.swing.JButton jEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -453,15 +492,12 @@ public class ViewDoctors extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton jSalvar;
+    private javax.swing.JButton jSaveEditDoctor;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JFormattedTextField jTextCpfDoctor;
     private javax.swing.JTextField jTextEmailDoctor;
-    private javax.swing.JFormattedTextField jTextFieldCpfDoctorEdit;
-    private javax.swing.JTextField jTextFieldDoctorNameEdit;
-    private javax.swing.JTextField jTextFieldEmailDoctorEdit;
-    private javax.swing.JFormattedTextField jTextFieldFoneDoctorEdit;
     private javax.swing.JFormattedTextField jTextFoneDoctor;
     private javax.swing.JTextField jTextNomeDoctor;
     private javax.swing.JToggleButton jToggleButton1;

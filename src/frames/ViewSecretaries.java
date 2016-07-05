@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -14,6 +16,7 @@ import process.Functions;
 
 public class ViewSecretaries extends javax.swing.JFrame {
 
+    private static String emailToEdit;
     public ViewSecretaries() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -43,19 +46,19 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jListSecretaries = new javax.swing.JList<>();
         jEditar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jDeletSecretary = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextFieldSecretariesNameEdit = new javax.swing.JTextField();
-        jTextFieldEmailSecretariesEdit = new javax.swing.JTextField();
-        jTextFieldFoneSecretariesEdit = new javax.swing.JFormattedTextField();
-        jTextFieldCpfSecretariesEdit = new javax.swing.JFormattedTextField();
+        jEditSecretaryName = new javax.swing.JTextField();
+        jEditSecretaryEmail = new javax.swing.JTextField();
+        jEditSecretaryFone = new javax.swing.JFormattedTextField();
+        jEditSecretaryCpf = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jSalvar = new javax.swing.JButton();
+        jEditSaveSecretary = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,7 +176,12 @@ public class ViewSecretaries extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Deletar");
+        jDeletSecretary.setText("Deletar");
+        jDeletSecretary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDeletSecretaryActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Voltar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +198,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jDeletSecretary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -208,7 +216,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jEditar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(jDeletSecretary)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)))
                 .addContainerGap())
@@ -223,13 +231,13 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jLabel7.setText("Fone:");
 
         try {
-            jTextFieldFoneSecretariesEdit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+            jEditSecretaryFone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            jTextFieldCpfSecretariesEdit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jEditSecretaryCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -243,10 +251,10 @@ public class ViewSecretaries extends javax.swing.JFrame {
             }
         });
 
-        jSalvar.setText("Salvar");
-        jSalvar.addActionListener(new java.awt.event.ActionListener() {
+        jEditSaveSecretary.setText("Salvar");
+        jEditSaveSecretary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jSalvarActionPerformed(evt);
+                jEditSaveSecretaryActionPerformed(evt);
             }
         });
 
@@ -265,15 +273,15 @@ public class ViewSecretaries extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSalvar))
-                    .addComponent(jTextFieldEmailSecretariesEdit)
-                    .addComponent(jTextFieldSecretariesNameEdit)
+                        .addComponent(jEditSaveSecretary))
+                    .addComponent(jEditSecretaryEmail)
+                    .addComponent(jEditSecretaryName)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextFieldFoneSecretariesEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jEditSecretaryFone, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldCpfSecretariesEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jEditSecretaryCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(63, 63, 63))
         );
         jPanel3Layout.setVerticalGroup(
@@ -282,13 +290,13 @@ public class ViewSecretaries extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextFieldSecretariesNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jEditSecretaryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
-                        .addComponent(jTextFieldEmailSecretariesEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jEditSecretaryEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldFoneSecretariesEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldCpfSecretariesEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jEditSecretaryFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jEditSecretaryCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -298,7 +306,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
                         .addComponent(jLabel7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSalvar)
+                    .addComponent(jEditSaveSecretary)
                     .addComponent(jButton4))
                 .addGap(29, 29, 29))
         );
@@ -309,10 +317,10 @@ public class ViewSecretaries extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jTabEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,10 +360,12 @@ public class ViewSecretaries extends javax.swing.JFrame {
                 cpf = br.readLine();
             } while (!(email.equals(emailSelected)));
 
-            jTextFieldEmailSecretariesEdit.setText(email);
-            jTextFieldSecretariesNameEdit.setText(name);
-            jTextFieldFoneSecretariesEdit.setText(fone);
-            jTextFieldCpfSecretariesEdit.setText(cpf);
+            emailToEdit = email;
+            
+            jEditSecretaryEmail.setText(email);
+            jEditSecretaryName.setText(name);
+            jEditSecretaryFone.setText(fone);
+            jEditSecretaryCpf.setText(cpf);
 
         } catch (IOException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
@@ -409,9 +419,26 @@ public class ViewSecretaries extends javax.swing.JFrame {
         back.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalvarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSalvarActionPerformed
+    private void jEditSaveSecretaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditSaveSecretaryActionPerformed
+        List<String> contentToEdit = new ArrayList();
+
+        contentToEdit.add(jEditSecretaryEmail.getText());
+        contentToEdit.add(jEditSecretaryName.getText());
+        contentToEdit.add(jEditSecretaryFone.getText());
+        contentToEdit.add(jEditSecretaryCpf.getText());
+        
+        Functions.Edit("secretaries.txt", contentToEdit, emailToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
+
+        contentToEdit.clear();
+        contentToEdit.add(jEditSecretaryEmail.getText());
+
+        Functions.Edit("secretariesNames.txt", contentToEdit, emailToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
+
+        jTabEdit.setSelectedIndex(1);
+        jTabEdit.setEnabledAt(2, false);
+        jTabEdit.setEnabledAt(0, true);
+        jTabEdit.setEnabledAt(1, true);
+    }//GEN-LAST:event_jEditSaveSecretaryActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -420,6 +447,14 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jTabEdit.setEnabledAt(0, true);
         jTabEdit.setEnabledAt(1, true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jDeletSecretaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeletSecretaryActionPerformed
+       emailToEdit = jListSecretaries.getSelectedValue();
+        
+        Functions.Delete("secretaries.txt",4, emailToEdit);
+        Functions.Delete("secretariesNames.txt",1, emailToEdit);
+        process.Functions.createListModel("secretariesNames.txt", this.jListSecretaries);
+    }//GEN-LAST:event_jDeletSecretaryActionPerformed
 
     public static void main(String args[]) {
 
@@ -433,8 +468,13 @@ public class ViewSecretaries extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jDeletSecretary;
+    private javax.swing.JButton jEditSaveSecretary;
+    private javax.swing.JFormattedTextField jEditSecretaryCpf;
+    private javax.swing.JTextField jEditSecretaryEmail;
+    private javax.swing.JFormattedTextField jEditSecretaryFone;
+    private javax.swing.JTextField jEditSecretaryName;
     private javax.swing.JButton jEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -448,15 +488,10 @@ public class ViewSecretaries extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JButton jSalvar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JFormattedTextField jTextCpfSecretaries;
     private javax.swing.JTextField jTextEmailSecretaries;
-    private javax.swing.JFormattedTextField jTextFieldCpfSecretariesEdit;
-    private javax.swing.JTextField jTextFieldEmailSecretariesEdit;
-    private javax.swing.JFormattedTextField jTextFieldFoneSecretariesEdit;
-    private javax.swing.JTextField jTextFieldSecretariesNameEdit;
     private javax.swing.JFormattedTextField jTextFoneSecretaries;
     private javax.swing.JTextField jTextNomeSecretaries;
     private javax.swing.JToggleButton jToggleButton1;

@@ -522,7 +522,6 @@ public class ViewPatients extends javax.swing.JFrame {
             String filePath = Functions.VerifyFile("patients.txt", false);
 
             BufferedReader br = new BufferedReader(new FileReader(filePath));
-
             String nameSelected = jListPatients.getSelectedValue();
 
             do {
