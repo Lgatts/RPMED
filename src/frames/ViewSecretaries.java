@@ -1,22 +1,24 @@
 package frames;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import process.DisplayList;
 import process.Functions;
 
 public class ViewSecretaries extends javax.swing.JFrame {
 
-    private static String emailToEdit;
+    private DisplayList display = new DisplayList();
+    private List<users.Secretary> secretaries = new ArrayList<users.Secretary>();
+    private static String idToEdit;
+
     public ViewSecretaries() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -167,6 +169,11 @@ public class ViewSecretaries extends javax.swing.JFrame {
 
         jTabEdit.addTab("Adicionar", jPanel1);
 
+        jListSecretaries.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jListSecretariesFocusGained(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListSecretaries);
 
         jEditar.setText("Editar");
@@ -341,35 +348,23 @@ public class ViewSecretaries extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditarActionPerformed
-        String name, email, fone, cpf;
+
+        secretaries = display.getSecretaries(); // Busca a lista de users criadas para listar         
+        users.Secretary secretary = secretaries.get(jListSecretaries.getSelectedIndex()); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+        idToEdit = secretary.id;
 
         jTabEdit.setSelectedIndex(2);
         jTabEdit.setEnabledAt(2, true);
         jTabEdit.setEnabledAt(0, false);
         jTabEdit.setEnabledAt(1, false);
 
-        try {
-            String filePath = Functions.VerifyFile("secretaries.txt", false);
+        idToEdit = secretary.id;
+        jEditSecretaryEmail.setText(secretary.email);
+        jEditSecretaryName.setText(secretary.name);
+        jEditSecretaryFone.setText(secretary.fone);
+        jEditSecretaryCpf.setText(secretary.cpf);
 
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
-            String emailSelected = jListSecretaries.getSelectedValue();
-            do {
-                email = br.readLine();
-                name = br.readLine();
-                fone = br.readLine();
-                cpf = br.readLine();
-            } while (!(email.equals(emailSelected)));
 
-            emailToEdit = email;
-            
-            jEditSecretaryEmail.setText(email);
-            jEditSecretaryName.setText(name);
-            jEditSecretaryFone.setText(fone);
-            jEditSecretaryCpf.setText(cpf);
-
-        } catch (IOException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_jEditarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -378,20 +373,16 @@ public class ViewSecretaries extends javax.swing.JFrame {
         } else {
             try {
                 String filePath = Functions.VerifyFile("secretaries.txt", true);
-                String filePathNames = Functions.VerifyFile("secretariesNames.txt", true);
 
                 PrintWriter pwSecretaries = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-                PrintWriter pwSecretariesNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
 
+                pwSecretaries.println(UUID.randomUUID().toString());
                 pwSecretaries.println(jTextEmailSecretaries.getText());
                 pwSecretaries.println(jTextNomeSecretaries.getText());
                 pwSecretaries.println(jTextFoneSecretaries.getText());
                 pwSecretaries.println(jTextCpfSecretaries.getText());
 
-                pwSecretariesNames.println(jTextEmailSecretaries.getText());
-
                 pwSecretaries.close();
-                pwSecretariesNames.close();
 
                 jTextNomeSecretaries.setText("");
                 jTextEmailSecretaries.setText("");
@@ -407,8 +398,24 @@ public class ViewSecretaries extends javax.swing.JFrame {
         }    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged
-        if (jTabEdit.getSelectedIndex() == 1) {
-            process.Functions.createListModel("secretariesNames.txt", this.jListSecretaries);//Listar quando a tab do listar for selecionada
+
+        String path = Functions.VerifyFile("secretaries.txt", false);
+        if (path != null) {
+
+            if (jTabEdit.getSelectedIndex() == 1) {
+                jTabEdit.requestFocus();
+
+                jDeletSecretary.setEnabled(false);
+                jEditar.setEnabled(false);
+
+                display.createElement("secretaries.txt");
+                display.createListModel(jListSecretaries);
+
+            } else {
+                display.clearList();
+            }
+        } else if (jTabEdit.getSelectedIndex() == 1) {
+            JOptionPane.showMessageDialog(null, "Não existe nenhum cadastro", "Erro", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_jTabEditStateChanged
 
@@ -422,18 +429,17 @@ public class ViewSecretaries extends javax.swing.JFrame {
     private void jEditSaveSecretaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditSaveSecretaryActionPerformed
         List<String> contentToEdit = new ArrayList();
 
+        contentToEdit.add(idToEdit);
         contentToEdit.add(jEditSecretaryEmail.getText());
         contentToEdit.add(jEditSecretaryName.getText());
         contentToEdit.add(jEditSecretaryFone.getText());
         contentToEdit.add(jEditSecretaryCpf.getText());
-        
-        Functions.Edit("secretaries.txt", contentToEdit, emailToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
+
+        Functions.Edit("secretaries.txt", contentToEdit, idToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
 
         contentToEdit.clear();
         contentToEdit.add(jEditSecretaryEmail.getText());
-
-        Functions.Edit("secretariesNames.txt", contentToEdit, emailToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
-
+        
         jTabEdit.setSelectedIndex(1);
         jTabEdit.setEnabledAt(2, false);
         jTabEdit.setEnabledAt(0, true);
@@ -449,12 +455,22 @@ public class ViewSecretaries extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jDeletSecretaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeletSecretaryActionPerformed
-       emailToEdit = jListSecretaries.getSelectedValue();
+        secretaries = display.getSecretaries();        
+        users.Secretary secretary = secretaries.get(jListSecretaries.getSelectedIndex());
+        idToEdit = secretary.id;
+
+        Functions.Delete("secretaries.txt", 5, idToEdit);
+
+        display.clearList();
+        display.createElement("secretaries.txt");
+        display.createListModel(jListSecretaries);
         
-        Functions.Delete("secretaries.txt",4, emailToEdit);
-        Functions.Delete("secretariesNames.txt",1, emailToEdit);
-        process.Functions.createListModel("secretariesNames.txt", this.jListSecretaries);
     }//GEN-LAST:event_jDeletSecretaryActionPerformed
+
+    private void jListSecretariesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jListSecretariesFocusGained
+        jEditar.setEnabled(true);
+        jDeletSecretary.setEnabled(true);
+    }//GEN-LAST:event_jListSecretariesFocusGained
 
     public static void main(String args[]) {
 

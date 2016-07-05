@@ -46,7 +46,7 @@ public class Login {
                 BufferedReader br = new BufferedReader(new FileReader(filePath));
                 String srt;
                 while ((srt = br.readLine()) != null) {
-                    User user = new User(srt, br.readLine(), br.readLine(), br.readLine());
+                    User user = new User(srt,br.readLine(), br.readLine(), br.readLine(), br.readLine());
                     users.add(user);
                 }
 

@@ -1,24 +1,24 @@
 package frames;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import process.DisplayList;
 import process.Functions;
 
 public class ViewDoctors extends javax.swing.JFrame {
 
-    
-    private static String emailToEdit;
+    private static String idToEdit;
+    private DisplayList display = new DisplayList();
+    private List<users.Doctor> doctors = new ArrayList<users.Doctor>();
+
     public ViewDoctors() {
 
         initComponents();
@@ -168,6 +168,11 @@ public class ViewDoctors extends javax.swing.JFrame {
 
         jTabEdit.addTab("Adicionar", jPanel1);
 
+        jListDoctors.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jListDoctorsFocusGained(evt);
+            }
+        });
         jScrollPane2.setViewportView(jListDoctors);
 
         jEditar.setText("Editar");
@@ -353,35 +358,22 @@ public class ViewDoctors extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditarActionPerformed
-        String name, email, fone, cpf;
+
+        doctors = display.getDoctors(); // Busca a lista de users criadas para listar         
+        users.Doctor doctor = doctors.get(jListDoctors.getSelectedIndex()); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+        idToEdit = doctor.id;
+
+        jEditDoctorEmail.setText(doctor.email);
+        jEditDoctorCpf.setText(doctor.cpf);
+        jEditDoctorFone.setText(doctor.fone);
+        jEditDoctorName.setText(doctor.name);
 
         jTabEdit.setSelectedIndex(2);
         jTabEdit.setEnabledAt(2, true);
         jTabEdit.setEnabledAt(0, false);
         jTabEdit.setEnabledAt(1, false);
 
-        try {
-            String filePath = Functions.VerifyFile("doctors.txt", false);
-//            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Yury Alencar\\Documents\\NetBeansProjects\\rpmed\\RPMED\\src\\data\\users.txt"));
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
-            String emailSelected = jListDoctors.getSelectedValue();
-            do {
-                email = br.readLine();
-                name = br.readLine();
-                fone = br.readLine();
-                cpf = br.readLine();
-            } while (!(email.equals(emailSelected)));
 
-            emailToEdit = email;
-            
-            jEditDoctorEmail.setText(email);
-            jEditDoctorName.setText(name);
-            jEditDoctorFone.setText(fone);
-            jEditDoctorCpf.setText(cpf);
-
-        } catch (IOException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_jEditarActionPerformed
 
     private void jSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalvarActionPerformed
@@ -390,20 +382,16 @@ public class ViewDoctors extends javax.swing.JFrame {
         } else {
             try {
                 String filePath = Functions.VerifyFile("doctors.txt", true);
-                String filePathNames = Functions.VerifyFile("doctorsNames.txt", true);
 
                 PrintWriter pwDoctor = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-                PrintWriter pwDoctorNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));
 
+                pwDoctor.println(UUID.randomUUID().toString());
                 pwDoctor.println(jTextEmailDoctor.getText());
                 pwDoctor.println(jTextNomeDoctor.getText());
                 pwDoctor.println(jTextFoneDoctor.getText());
                 pwDoctor.println(jTextCpfDoctor.getText());
 
-                pwDoctorNames.println(jTextEmailDoctor.getText());
-
                 pwDoctor.close();
-                pwDoctorNames.close();
 
                 jTextEmailDoctor.setText("");
                 jTextNomeDoctor.setText("");
@@ -420,8 +408,24 @@ public class ViewDoctors extends javax.swing.JFrame {
     }//GEN-LAST:event_jSalvarActionPerformed
 
     private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged
-        if (jTabEdit.getSelectedIndex() == 1) {
-            process.Functions.createListModel("doctorsNames.txt", this.jListDoctors);//Listar quando a tab do listar for selecionada
+        String path = Functions.VerifyFile("doctors.txt", false);
+        if (path != null) {
+
+            if (jTabEdit.getSelectedIndex() == 1) {
+
+                jTabEdit.requestFocus();
+
+                jDelet.setEnabled(false);
+                jEditar.setEnabled(false);
+
+                display.createElement("doctors.txt");
+                display.createListModel(jListDoctors);
+
+            } else {
+                display.clearList();
+            }
+        } else if (jTabEdit.getSelectedIndex() == 1) {
+            JOptionPane.showMessageDialog(null, "Não existe nenhum cadastro", "Erro", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_jTabEditStateChanged
 
@@ -435,17 +439,13 @@ public class ViewDoctors extends javax.swing.JFrame {
     private void jSaveEditDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSaveEditDoctorActionPerformed
         List<String> contentToEdit = new ArrayList();
 
+        contentToEdit.add(idToEdit);
         contentToEdit.add(jEditDoctorEmail.getText());
         contentToEdit.add(jEditDoctorName.getText());
         contentToEdit.add(jEditDoctorFone.getText());
         contentToEdit.add(jEditDoctorCpf.getText());
-        
-        Functions.Edit("doctors.txt", contentToEdit, emailToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
 
-        contentToEdit.clear();
-        contentToEdit.add(jEditDoctorEmail.getText());
-
-        Functions.Edit("doctorsNames.txt", contentToEdit, emailToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
+        Functions.Edit("doctors.txt", contentToEdit, idToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
 
         jTabEdit.setSelectedIndex(1);
         jTabEdit.setEnabledAt(2, false);
@@ -454,12 +454,22 @@ public class ViewDoctors extends javax.swing.JFrame {
     }//GEN-LAST:event_jSaveEditDoctorActionPerformed
 
     private void jDeletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeletActionPerformed
-        emailToEdit = jListDoctors.getSelectedValue();
-        
-        Functions.Delete("doctors.txt",4, emailToEdit);
-        Functions.Delete("doctorsNames.txt",1, emailToEdit);
-        process.Functions.createListModel("doctorsNames.txt", this.jListDoctors);
+
+        doctors = display.getDoctors();        
+        users.Doctor doctor = doctors.get(jListDoctors.getSelectedIndex());
+        idToEdit = doctor.id;
+
+        Functions.Delete("doctors.txt", 5, idToEdit);
+
+        display.clearList();
+        display.createElement("doctors.txt");
+        display.createListModel(jListDoctors);
     }//GEN-LAST:event_jDeletActionPerformed
+
+    private void jListDoctorsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jListDoctorsFocusGained
+        jDelet.setEnabled(true);
+        jEditar.setEnabled(true);
+    }//GEN-LAST:event_jListDoctorsFocusGained
 
     public static void main(String args[]) {
 

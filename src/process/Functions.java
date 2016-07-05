@@ -79,74 +79,58 @@ public class Functions {
     }
 
     public static void Edit(String fileName, List contentsToEdit, String emailToEdit) {
-        
-        Path filePath = Paths.get(VerifyFile(fileName, false));        
-        
-        
-        
+
+        Path filePath = Paths.get(VerifyFile(fileName, false));
+
         try {
             List<String> fileContent;
-            
-            fileContent = new ArrayList<>(Files.readAllLines(filePath, StandardCharsets.UTF_8));
-        
 
-        for (int i = 0; i < fileContent.size(); i = i+contentsToEdit.size()) {
-            if (fileContent.get(i).equals(emailToEdit)) {
-                
-                for(int j = 0;j < contentsToEdit.size();j++){
-                    fileContent.set(i+j,(String)contentsToEdit.get(j));
+            fileContent = new ArrayList<>(Files.readAllLines(filePath, StandardCharsets.UTF_8));
+
+            for (int i = 0; i < fileContent.size(); i = i + contentsToEdit.size()) {
+                if (fileContent.get(i).equals(emailToEdit)) {
+
+                    for (int j = 0; j < contentsToEdit.size(); j++) {
+                        fileContent.set(i + j, (String) contentsToEdit.get(j));
+                    }
+
+                    break;
                 }
-                
-                break;
             }
-        }
-        
-        
-         Files.write(filePath, fileContent, StandardCharsets.UTF_8);
-        
-        
+
+            Files.write(filePath, fileContent, StandardCharsets.UTF_8);
+
         } catch (IOException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-       
+
     }
-    
-    public static void Delete(String fileName, int nParameters, String emailToEdit) {
+
+    public static void Delete(String fileName, int nParameters, String idToEdit) {
         
-        Path filePath = Paths.get(VerifyFile(fileName, false));        
-        
-        
+        Path filePath = Paths.get(VerifyFile(fileName, false));
         
         try {
             List<String> fileContent;
-            
-            fileContent = new ArrayList<>(Files.readAllLines(filePath, StandardCharsets.UTF_8));
-        
 
-        for (int i = 0; i < fileContent.size(); i = i+nParameters) {
-            if (fileContent.get(i).equals(emailToEdit)) {
-                
-                for(int j = 0;j < nParameters;j++){
-                    fileContent.remove(i);
+            fileContent = new ArrayList<>(Files.readAllLines(filePath, StandardCharsets.UTF_8));
+
+            for (int i = 0; i < fileContent.size(); i = i + nParameters) {
+                if (fileContent.get(i).equals(idToEdit)) {
+
+                    for (int j = 0; j < nParameters; j++) {
+                        fileContent.remove(i);
+                    }
+                    break;
                 }
-                
-                break;
             }
-        }
-        
-        
-         Files.write(filePath, fileContent, StandardCharsets.UTF_8);
-        
-        
+
+            Files.write(filePath, fileContent, StandardCharsets.UTF_8);
+
         } catch (IOException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-       
+
     }
-    
 
 }

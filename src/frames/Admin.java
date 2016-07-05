@@ -1,8 +1,6 @@
 package frames;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,17 +8,21 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JOptionPane;
+import process.DisplayList;
 import process.Functions;
 
 public class Admin extends javax.swing.JFrame {
 
-    private static String emailToEdit;
+    private static String idToEdit;
+    private DisplayList display = new DisplayList();
+    private List<users.User> users = new ArrayList<users.User>();
 
     public Admin() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("RPMed - Usuário(a)s");
+        this.setTitle("RPMed - Administrador");
         jTabEdit.setEnabledAt(2, false);
 
     }
@@ -29,6 +31,7 @@ public class Admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         jTabEdit = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jButSaveAdd = new javax.swing.JButton();
@@ -58,6 +61,12 @@ public class Admin extends javax.swing.JFrame {
         jEditType = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jEditSave = new javax.swing.JButton();
+
+        jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPopupMenu1MouseClicked(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,6 +168,14 @@ public class Admin extends javax.swing.JFrame {
         });
 
         jListUsers.setToolTipText("");
+        jListUsers.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jListUsersFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jListUsersFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListUsers);
 
         jButDel.setText("Deletar");
@@ -313,16 +330,21 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButSaveAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButSaveAddActionPerformed
+
+        String filePath;
+
         if (jTextFieldEmailUser.getText().trim().equals("") || txtUserName.getText().trim().equals("") || jPasswordFieldPassword.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "Preencha os campos obrigatórios! (*)");
         } else {
-            try {
-                String filePath = Functions.VerifyFile("users.txt", true);
-                String filePathNames = Functions.VerifyFile("usersNames.txt", true);
 
-                PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-                PrintWriter pwUserNames = new PrintWriter(new BufferedWriter(new FileWriter(filePathNames, true)));                
-                
+            try {
+                if (jComboBoxTipeUser.getSelectedItem().toString() == "Administrador") {
+                    filePath = Functions.VerifyFile("admins.txt", true);                   
+                } else {
+                    filePath = Functions.VerifyFile("users.txt", true);                    
+                }
+                PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));               
+                pwUser.println(UUID.randomUUID().toString());
                 pwUser.println(jTextFieldEmailUser.getText());
                 pwUser.println(txtUserName.getText());
                 pwUser.println(jPasswordFieldPassword.getPassword());
@@ -337,11 +359,8 @@ public class Admin extends javax.swing.JFrame {
                     case "Secretária":
                         pwUser.println("Secretary");
                 }
-
-                pwUserNames.println(jTextFieldEmailUser.getText());
-
+                
                 pwUser.close();
-                pwUserNames.close();
 
                 jTextFieldEmailUser.setText("");
                 txtUserName.setText("");
@@ -358,53 +377,77 @@ public class Admin extends javax.swing.JFrame {
 
     private void jButEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButEditActionPerformed
 
-        String name, email, password, type;
+        users = display.getUsers(); // Busca a lista de users criadas para listar         
+        users.User user = users.get(jListUsers.getSelectedIndex()); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+        idToEdit = user.id;
+
+        jTextFieldEmailUserEdit.setText(user.email);
+        jTextFieldUserNameEdit.setText(user.name);
+        jPasswordFieldPasswordEdit.setText(user.password);
+
+        switch (user.type) {
+            case "Admin":
+                jEditType.setText("Administrador");
+                break;
+            case "Medic":
+                jEditType.setText("Médico");
+                break;
+            case "Secretary":
+                jEditType.setText("Secretária");
+                break;
+        }
 
         jTabEdit.setSelectedIndex(2);
         jTabEdit.setEnabledAt(2, true);
         jTabEdit.setEnabledAt(0, false);
         jTabEdit.setEnabledAt(1, false);
 
-        try {
-            String filePath = Functions.VerifyFile("users.txt", false);
-
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
-            String emailSelected = jListUsers.getSelectedValue();
-            do {
-                email = br.readLine();
-                name = br.readLine();
-                password = br.readLine();
-                type = br.readLine();
-            } while (!(email.equals(emailSelected)));
-
-            jTextFieldUserNameEdit.setText(name);
-            jTextFieldEmailUserEdit.setText(email);
-
-            emailToEdit = email;
-
-            jPasswordFieldPasswordEdit.setText(password);
-            jEditType.setText(type);
-
-        } catch (IOException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
     }//GEN-LAST:event_jButEditActionPerformed
 
     private void jButDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButDelActionPerformed
-        
-        emailToEdit = jListUsers.getSelectedValue();
-        
-        Functions.Delete("users.txt",4, emailToEdit);
-        Functions.Delete("usersNames.txt",1, emailToEdit);
-        process.Functions.createListModel("usersNames.txt", this.jListUsers);
+
+        users = display.getUsers();
+        jListUsers.getSelectedIndex(); // O index da lista é compativel com o index do JList
+        users.User user = users.get(jListUsers.getSelectedIndex());
+        idToEdit = user.id;
+
+        if (user.type.equals("Admin")) {
+            Functions.Delete("admins.txt", 5, idToEdit);
+        } else {
+            Functions.Delete("users.txt", 5, idToEdit);
+        }
+
+        display.clearList();
+        display.createElement("users.txt");
+        display.createListModel(jListUsers);
+
     }//GEN-LAST:event_jButDelActionPerformed
 
     private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged
-        if (jTabEdit.getSelectedIndex() == 1) {
-            process.Functions.createListModel("usersNames.txt", this.jListUsers);//Listar quando a tab do listar for selecionada
+
+        String path = Functions.VerifyFile("users.txt", false);
+        
+        if (path != null) {
+            if (jTabEdit.getSelectedIndex() == 1) {
+
+                jButDel.setEnabled(false);
+                jButEdit.setEnabled(false);
+
+                display.createElement("users.txt");
+                display.createListModel(jListUsers);
+
+                jTabEdit.requestFocus();
+
+            } else {
+                display.clearList();
+            }
+        } else if (jTabEdit.getSelectedIndex() == 1) {
+            JOptionPane.showMessageDialog(null, "Não existe nenhum cadastro", "Erro", JOptionPane.PLAIN_MESSAGE);  
+            display.clearList();
         }
+        
+
+
     }//GEN-LAST:event_jTabEditStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -437,26 +480,49 @@ public class Admin extends javax.swing.JFrame {
         for (int i = 0; i < passwordArray.length; i++) {
             password = password + passwordArray[i];
         }
-
+        contentToEdit.add(idToEdit);
         contentToEdit.add(jTextFieldEmailUserEdit.getText());
         contentToEdit.add(jTextFieldUserNameEdit.getText());
         contentToEdit.add(password);
-        contentToEdit.add(jEditType.getText());
 
-        Functions.Edit("users.txt", contentToEdit, emailToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
+        switch (jEditType.getText()) {
+            case "Administrador":
+                contentToEdit.add("Admin");
+                break;
+            case "Médico":
+                contentToEdit.add("Medic");
+                break;
+            case "Secretária":
+                contentToEdit.add("Secretary");
+                break;
+        }
 
-        contentToEdit.clear();
-        contentToEdit.add(jTextFieldEmailUserEdit.getText());
-
-        Functions.Edit("usersNames.txt", contentToEdit, emailToEdit); //editando o conteudo do arquivo usersNames que é utilizando para atualizar a lista
+        if (jEditType.getText().equals("Administrador")) {
+            Functions.Edit("admins.txt", contentToEdit, idToEdit);//editando o arquivo que chama admin.txt com o conteudo da aba edit
+        } else {
+            Functions.Edit("users.txt", contentToEdit, idToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
+        }
 
         jTabEdit.setSelectedIndex(1);
         jTabEdit.setEnabledAt(2, false);
         jTabEdit.setEnabledAt(0, true);
         jTabEdit.setEnabledAt(1, true);
 
-
     }//GEN-LAST:event_jEditSaveActionPerformed
+
+    private void jListUsersFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jListUsersFocusGained
+        jButDel.setEnabled(true);
+        jButEdit.setEnabled(true);
+    }//GEN-LAST:event_jListUsersFocusGained
+
+    private void jPopupMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPopupMenu1MouseClicked
+
+    }//GEN-LAST:event_jPopupMenu1MouseClicked
+
+    private void jListUsersFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jListUsersFocusLost
+        jButDel.setEnabled(false);
+        jButEdit.setEnabled(false);
+    }//GEN-LAST:event_jListUsersFocusLost
 
     public static void main(String args[]) {
 
@@ -491,6 +557,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPasswordField jPasswordFieldPassword;
     private javax.swing.JPasswordField jPasswordFieldPasswordEdit;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JTextField jTextFieldEmailUser;
