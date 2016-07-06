@@ -51,7 +51,7 @@ public class User extends javax.swing.JFrame {
             display.createElement("consultation.txt");
             display.createListModel(jListPanelUser);
         } else {
-            JOptionPane.showMessageDialog(null, "Não existe nenhum cadastro", "Erro", JOptionPane.PLAIN_MESSAGE);
+
         }
     }
 
@@ -181,10 +181,25 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        new Consultations().setVisible(true);
-        display.clearList();
+
+        String pathDoctor = Functions.VerifyFile("doctors.txt", false);
+        String pathPatient = Functions.VerifyFile("patients.txt", false);
+
+        if (pathDoctor == null) {
+            if (pathPatient == null) {
+                JOptionPane.showMessageDialog(null, "Cadastre um médico e um paciente antes de marcar uma consulta!", "Atenção", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Cadastre um médico antes de marcar uma consulta!", "Atenção", JOptionPane.PLAIN_MESSAGE);
+            }
+        } else if (pathPatient == null) {
+            JOptionPane.showMessageDialog(null, "Cadastre um paciente antes de marcar uma consulta!", "Atenção", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            this.dispose();
+            new Consultations().setVisible(true);
+            display.clearList();
+        }
+
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

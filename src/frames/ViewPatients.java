@@ -69,7 +69,6 @@ public class ViewPatients extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPatientName = new javax.swing.JTextField();
-        jPatientRg = new javax.swing.JTextField();
         jPatientEmail = new javax.swing.JTextField();
         jPatientAdress = new javax.swing.JTextField();
         jPatientAdressNumber = new javax.swing.JTextField();
@@ -77,6 +76,7 @@ public class ViewPatients extends javax.swing.JFrame {
         Voltar = new javax.swing.JButton();
         jPatientCpf = new javax.swing.JFormattedTextField();
         jPatientFone = new javax.swing.JFormattedTextField();
+        jPatientRg = new javax.swing.JFormattedTextField();
         jTabList = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -158,6 +158,12 @@ public class ViewPatients extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        try {
+            jPatientRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -187,11 +193,11 @@ public class ViewPatients extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPatientFone)
                             .addComponent(jPatientAdressNumber)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPatientRg, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(99, 99, 99)
-                        .addComponent(jLabel5)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPatientRg, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPatientCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPatientName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 68, Short.MAX_VALUE))
@@ -206,9 +212,9 @@ public class ViewPatients extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jPatientRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jPatientCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPatientCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPatientRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -713,7 +719,7 @@ public class ViewPatients extends javax.swing.JFrame {
     private javax.swing.JTextField jPatientEmail;
     private javax.swing.JFormattedTextField jPatientFone;
     private javax.swing.JTextField jPatientName;
-    private javax.swing.JTextField jPatientRg;
+    private javax.swing.JFormattedTextField jPatientRg;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JPanel jTabList;
