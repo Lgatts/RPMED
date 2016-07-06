@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
 import static process.Functions.VerifyFile;
 import users.Consult;
@@ -158,6 +159,44 @@ public class DisplayList {
         jList.setModel(listModel);
 
     }
+    
+    public void createCombotModel(javax.swing.JComboBox jList) {
+
+        
+        
+        switch (typeUser) {
+            case "user":
+                for (User user : users) {
+                    jList.addItem(user.name);
+                }
+                break;
+            case "doctor":
+                for (Doctor doctor : doctors) {
+                    jList.addItem(doctor.name);
+                }
+                break;
+            case "secretary":
+                for (Secretary secretary : secretaries) {
+                    jList.addItem(secretary.name);
+                }
+                break;
+            case "patient":
+                for (Patient patient : patients) {
+                    jList.addItem(patient.name);
+                }
+                break;
+            case "consult":
+                for (Consult consult : consults) {
+                    jList.addItem(consult.id);
+                }
+                break;
+                
+        }
+
+        
+
+    }
+    
 
     public void clearList() {
         users.clear();
