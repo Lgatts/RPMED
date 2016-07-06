@@ -117,21 +117,17 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jSalvar" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jTextFoneDoctor" min="-2" pref="122" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextCpfDoctor" min="-2" pref="117" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jTextEmailDoctor" pref="343" max="32767" attributes="0"/>
-                                  <Component id="jTextNomeDoctor" max="32767" attributes="0"/>
-                              </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jTextFoneDoctor" min="-2" pref="122" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextCpfDoctor" min="-2" pref="117" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jTextEmailDoctor" alignment="1" pref="343" max="32767" attributes="0"/>
+                          <Component id="jTextNomeDoctor" alignment="1" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="61" max="32767" attributes="0"/>
+                      <EmptySpace pref="53" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -353,21 +349,17 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jSaveEditDoctor" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jEditDoctorFone" min="-2" pref="122" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jEditDoctorCpf" min="-2" pref="117" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jEditDoctorEmail" alignment="1" pref="343" max="32767" attributes="0"/>
-                                  <Component id="jEditDoctorName" alignment="1" max="32767" attributes="0"/>
-                              </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jEditDoctorFone" min="-2" pref="122" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jEditDoctorCpf" min="-2" pref="117" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jEditDoctorEmail" alignment="1" pref="343" max="32767" attributes="0"/>
+                          <Component id="jEditDoctorName" alignment="1" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="61" max="32767" attributes="0"/>
+                      <EmptySpace pref="53" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
