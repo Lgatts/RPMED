@@ -167,8 +167,7 @@ public class User extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        ViewDoctors view = new ViewDoctors();
-        view.setVisible(true);
+        new ViewDoctors().setVisible(true);
         display.clearList();
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -176,8 +175,7 @@ public class User extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        ViewPatients view = new ViewPatients();
-        view.setVisible(true);
+        new ViewPatients().setVisible(true);
         display.clearList();
 
     }//GEN-LAST:event_jMenuItem6ActionPerformed
@@ -185,8 +183,7 @@ public class User extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Consultations newConsult = new Consultations();
-        newConsult.setVisible(true);
+        new Consultations().setVisible(true);
         display.clearList();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -231,10 +228,10 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_jListPanelUserMouseClicked
 
     private void jDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDetailsActionPerformed
-       Consult consult = display.getConsults().get(jListPanelUser.getSelectedIndex());
-       SelectedConsult.setConsult(consult);
-       new ConsultationDetails().setVisible(true);
-       jMenuRight.setVisible(false);
+        Consult consult = display.getConsults().get(jListPanelUser.getSelectedIndex());
+        SelectedConsult.setConsult(consult);
+        new ConsultationDetails().setVisible(true);
+        jMenuRight.setVisible(false);
     }//GEN-LAST:event_jDetailsActionPerformed
 
     /**

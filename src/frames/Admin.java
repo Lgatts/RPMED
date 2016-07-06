@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import process.DisplayList;
 import process.Functions;
 
@@ -31,7 +32,6 @@ public class Admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
         jTabEdit = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jButSaveAdd = new javax.swing.JButton();
@@ -45,11 +45,11 @@ public class Admin extends javax.swing.JFrame {
         jPasswordFieldPassword = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jButEdit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListUsers = new javax.swing.JList<>();
         jButDel = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButEdit = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPasswordFieldPasswordEdit = new javax.swing.JPasswordField();
         jTextFieldEmailUserEdit = new javax.swing.JTextField();
@@ -61,12 +61,6 @@ public class Admin extends javax.swing.JFrame {
         jEditType = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jEditSave = new javax.swing.JButton();
-
-        jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPopupMenu1MouseClicked(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,20 +154,15 @@ public class Admin extends javax.swing.JFrame {
 
         jTabEdit.addTab("Adicionar", jPanel1);
 
-        jButEdit.setText("Editar");
-        jButEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButEditActionPerformed(evt);
-            }
-        });
-
         jListUsers.setToolTipText("");
         jListUsers.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jListUsersFocusGained(evt);
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jListUsersFocusLost(evt);
+        });
+        jListUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListUsersMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jListUsers);
@@ -192,6 +181,13 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        jButEdit.setText("Editar");
+        jButEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButEditActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -200,14 +196,17 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButDel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButDel)
+                            .addComponent(jButEdit))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton2))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButDel, jButEdit});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -339,11 +338,11 @@ public class Admin extends javax.swing.JFrame {
 
             try {
                 if (jComboBoxTipeUser.getSelectedItem().toString() == "Administrador") {
-                    filePath = Functions.VerifyFile("admins.txt", true);                   
+                    filePath = Functions.VerifyFile("admins.txt", true);
                 } else {
-                    filePath = Functions.VerifyFile("users.txt", true);                    
+                    filePath = Functions.VerifyFile("users.txt", true);
                 }
-                PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));               
+                PrintWriter pwUser = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
                 pwUser.println(UUID.randomUUID().toString());
                 pwUser.println(jTextFieldEmailUser.getText());
                 pwUser.println(txtUserName.getText());
@@ -359,7 +358,7 @@ public class Admin extends javax.swing.JFrame {
                     case "Secretária":
                         pwUser.println("Secretary");
                 }
-                
+
                 pwUser.close();
 
                 jTextFieldEmailUser.setText("");
@@ -374,35 +373,6 @@ public class Admin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButSaveAddActionPerformed
-
-    private void jButEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButEditActionPerformed
-
-        users = display.getUsers(); // Busca a lista de users criadas para listar         
-        users.User user = users.get(jListUsers.getSelectedIndex()); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
-        idToEdit = user.id;
-
-        jTextFieldEmailUserEdit.setText(user.email);
-        jTextFieldUserNameEdit.setText(user.name);
-        jPasswordFieldPasswordEdit.setText(user.password);
-
-        switch (user.type) {
-            case "Admin":
-                jEditType.setText("Administrador");
-                break;
-            case "Medic":
-                jEditType.setText("Médico");
-                break;
-            case "Secretary":
-                jEditType.setText("Secretária");
-                break;
-        }
-
-        jTabEdit.setSelectedIndex(2);
-        jTabEdit.setEnabledAt(2, true);
-        jTabEdit.setEnabledAt(0, false);
-        jTabEdit.setEnabledAt(1, false);
-
-    }//GEN-LAST:event_jButEditActionPerformed
 
     private void jButDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButDelActionPerformed
 
@@ -426,7 +396,7 @@ public class Admin extends javax.swing.JFrame {
     private void jTabEditStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabEditStateChanged
 
         String path = Functions.VerifyFile("users.txt", false);
-        
+
         if (path != null) {
             if (jTabEdit.getSelectedIndex() == 1) {
 
@@ -442,10 +412,9 @@ public class Admin extends javax.swing.JFrame {
                 display.clearList();
             }
         } else if (jTabEdit.getSelectedIndex() == 1) {
-            JOptionPane.showMessageDialog(null, "Não existe nenhum cadastro", "Erro", JOptionPane.PLAIN_MESSAGE);  
+            JOptionPane.showMessageDialog(null, "Não existe nenhum cadastro", "Erro", JOptionPane.PLAIN_MESSAGE);
             display.clearList();
         }
-        
 
 
     }//GEN-LAST:event_jTabEditStateChanged
@@ -515,14 +484,65 @@ public class Admin extends javax.swing.JFrame {
         jButEdit.setEnabled(true);
     }//GEN-LAST:event_jListUsersFocusGained
 
-    private void jPopupMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPopupMenu1MouseClicked
+    private void jListUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListUsersMouseClicked
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            if (evt.getClickCount() == 2) {
+                int index = jListUsers.locationToIndex(evt.getPoint());
 
-    }//GEN-LAST:event_jPopupMenu1MouseClicked
+                users.User user = display.getUsers().get(index); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+                idToEdit = user.id;
 
-    private void jListUsersFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jListUsersFocusLost
-        jButDel.setEnabled(false);
-        jButEdit.setEnabled(false);
-    }//GEN-LAST:event_jListUsersFocusLost
+                jTextFieldEmailUserEdit.setText(user.email);
+                jTextFieldUserNameEdit.setText(user.name);
+                jPasswordFieldPasswordEdit.setText(user.password);
+
+                switch (user.type) {
+                    case "Admin":
+                        jEditType.setText("Administrador");
+                        break;
+                    case "Medic":
+                        jEditType.setText("Médico");
+                        break;
+                    case "Secretary":
+                        jEditType.setText("Secretária");
+                        break;
+                }
+
+                jTabEdit.setSelectedIndex(2);
+                jTabEdit.setEnabledAt(2, true);
+                jTabEdit.setEnabledAt(0, false);
+                jTabEdit.setEnabledAt(1, false);
+
+            }
+        }
+    }//GEN-LAST:event_jListUsersMouseClicked
+
+    private void jButEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButEditActionPerformed
+        // Busca a lista de users criadas para listar         
+        users.User user = display.getUsers().get(jListUsers.getSelectedIndex()); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+        idToEdit = user.id;
+
+        jTextFieldEmailUserEdit.setText(user.email);
+        jTextFieldUserNameEdit.setText(user.name);
+        jPasswordFieldPasswordEdit.setText(user.password);
+
+        switch (user.type) {
+            case "Admin":
+                jEditType.setText("Administrador");
+                break;
+            case "Medic":
+                jEditType.setText("Médico");
+                break;
+            case "Secretary":
+                jEditType.setText("Secretária");
+                break;
+        }
+
+        jTabEdit.setSelectedIndex(2);
+        jTabEdit.setEnabledAt(2, true);
+        jTabEdit.setEnabledAt(0, false);
+        jTabEdit.setEnabledAt(1, false);
+    }//GEN-LAST:event_jButEditActionPerformed
 
     public static void main(String args[]) {
 
@@ -557,7 +577,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPasswordField jPasswordFieldPassword;
     private javax.swing.JPasswordField jPasswordFieldPasswordEdit;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JTextField jTextFieldEmailUser;

@@ -13,12 +13,19 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import process.DisplayList;
 import process.Functions;
+import users.Doctor;
 
 public class ViewDoctors extends javax.swing.JFrame {
 
     private static String idToEdit;
     private DisplayList display = new DisplayList();
     private List<users.Doctor> doctors = new ArrayList<users.Doctor>();
+
+    private users.Doctor selectedDoctor;
+
+    public Doctor getSelectedDoctor() {
+        return selectedDoctor;
+    }
 
     public ViewDoctors() {
 
@@ -76,6 +83,11 @@ public class ViewDoctors extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         jDetails.setText("Ver Detalhes");
+        jDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDetailsActionPerformed(evt);
+            }
+        });
         jMenuRight.add(jDetails);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -369,8 +381,7 @@ public class ViewDoctors extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditarActionPerformed
-
-        doctors = display.getDoctors(); // Busca a lista de users criadas para listar         
+              
         users.Doctor doctor = doctors.get(jListDoctors.getSelectedIndex()); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
         idToEdit = doctor.id;
 
@@ -488,21 +499,20 @@ public class ViewDoctors extends javax.swing.JFrame {
             if (evt.getClickCount() == 2) {
                 jMenuRight.setVisible(false);
                 int index = jListDoctors.locationToIndex(evt.getPoint());
-                
-                doctors = display.getDoctors(); // Busca a lista de users criadas para listar         
-                users.Doctor doctor = doctors.get(index); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
-                idToEdit = doctor.id;
 
-                jEditDoctorEmail.setText(doctor.email);
-                jEditDoctorCpf.setText(doctor.cpf);
-                jEditDoctorFone.setText(doctor.fone);
-                jEditDoctorName.setText(doctor.name);
+                selectedDoctor = display.getDoctors().get(index); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+                idToEdit = selectedDoctor.id;
+
+                jEditDoctorEmail.setText(selectedDoctor.email);
+                jEditDoctorCpf.setText(selectedDoctor.cpf);
+                jEditDoctorFone.setText(selectedDoctor.fone);
+                jEditDoctorName.setText(selectedDoctor.name);
 
                 jTabEdit.setSelectedIndex(2);
                 jTabEdit.setEnabledAt(2, true);
                 jTabEdit.setEnabledAt(0, false);
                 jTabEdit.setEnabledAt(1, false);
-                
+
             }
         }
         if (SwingUtilities.isRightMouseButton(evt)) {
@@ -511,9 +521,16 @@ public class ViewDoctors extends javax.swing.JFrame {
             jListDoctors.setSelectedIndex(index);
             jMenuRight.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
             jMenuRight.setVisible(true);
+            display.getDoctors();    
+            selectedDoctor = display.getDoctors().get(index);
 
-        }        // TODO add your handling code here:
+        }     
     }//GEN-LAST:event_jListDoctorsMouseClicked
+
+    private void jDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDetailsActionPerformed
+       new DoctorsDetails(this).setVisible(true);
+       jMenuRight.setVisible(false);
+    }//GEN-LAST:event_jDetailsActionPerformed
 
     public static void main(String args[]) {
 

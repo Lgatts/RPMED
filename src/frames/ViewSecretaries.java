@@ -10,14 +10,22 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import process.DisplayList;
 import process.Functions;
+import users.Secretary;
 
 public class ViewSecretaries extends javax.swing.JFrame {
 
     private DisplayList display = new DisplayList();
     private List<users.Secretary> secretaries = new ArrayList<users.Secretary>();
     private static String idToEdit;
+
+    private users.Secretary selectedSecretary;
+
+    public Secretary getSelectedSecretary() {
+        return selectedSecretary;
+    }
 
     public ViewSecretaries() {
         initComponents();
@@ -32,6 +40,8 @@ public class ViewSecretaries extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuRight = new javax.swing.JPopupMenu();
+        jDetails = new javax.swing.JMenuItem();
         jTabEdit = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
@@ -61,6 +71,14 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jEditSaveSecretary = new javax.swing.JButton();
+
+        jDetails.setText("Ver detalhes");
+        jDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDetailsActionPerformed(evt);
+            }
+        });
+        jMenuRight.add(jDetails);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,6 +190,11 @@ public class ViewSecretaries extends javax.swing.JFrame {
         jListSecretaries.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jListSecretariesFocusGained(evt);
+            }
+        });
+        jListSecretaries.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListSecretariesMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jListSecretaries);
@@ -439,7 +462,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
 
         contentToEdit.clear();
         contentToEdit.add(jEditSecretaryEmail.getText());
-        
+
         jTabEdit.setSelectedIndex(1);
         jTabEdit.setEnabledAt(2, false);
         jTabEdit.setEnabledAt(0, true);
@@ -455,7 +478,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jDeletSecretaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeletSecretaryActionPerformed
-        secretaries = display.getSecretaries();        
+        secretaries = display.getSecretaries();
         users.Secretary secretary = secretaries.get(jListSecretaries.getSelectedIndex());
         idToEdit = secretary.id;
 
@@ -464,13 +487,52 @@ public class ViewSecretaries extends javax.swing.JFrame {
         display.clearList();
         display.createElement("secretaries.txt");
         display.createListModel(jListSecretaries);
-        
+
     }//GEN-LAST:event_jDeletSecretaryActionPerformed
 
     private void jListSecretariesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jListSecretariesFocusGained
         jEditar.setEnabled(true);
         jDeletSecretary.setEnabled(true);
     }//GEN-LAST:event_jListSecretariesFocusGained
+
+    private void jDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDetailsActionPerformed
+        new SecretaryDetails(this).setVisible(true);
+        jMenuRight.setVisible(false);
+    }//GEN-LAST:event_jDetailsActionPerformed
+
+    private void jListSecretariesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListSecretariesMouseClicked
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            jMenuRight.setVisible(false);
+            if (evt.getClickCount() == 2) {
+                jMenuRight.setVisible(false);
+                int index = jListSecretaries.locationToIndex(evt.getPoint());
+
+                selectedSecretary = display.getSecretaries().get(index); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+                idToEdit = selectedSecretary.id;
+
+                jEditSecretaryEmail.setText(selectedSecretary.email);
+                jEditSecretaryCpf.setText(selectedSecretary.cpf);
+                jEditSecretaryFone.setText(selectedSecretary.fone);
+                jEditSecretaryName.setText(selectedSecretary.name);
+
+                jTabEdit.setSelectedIndex(2);
+                jTabEdit.setEnabledAt(2, true);
+                jTabEdit.setEnabledAt(0, false);
+                jTabEdit.setEnabledAt(1, false);
+
+            }    
+        }
+        if (SwingUtilities.isRightMouseButton(evt)) {
+
+            int index = jListSecretaries.locationToIndex(evt.getPoint());
+            jListSecretaries.setSelectedIndex(index);
+            jMenuRight.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
+            jMenuRight.setVisible(true);
+            display.getSecretaries();
+            selectedSecretary = display.getSecretaries().get(index);
+
+        } 
+    }//GEN-LAST:event_jListSecretariesMouseClicked
 
     public static void main(String args[]) {
 
@@ -486,6 +548,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jDeletSecretary;
+    private javax.swing.JMenuItem jDetails;
     private javax.swing.JButton jEditSaveSecretary;
     private javax.swing.JFormattedTextField jEditSecretaryCpf;
     private javax.swing.JTextField jEditSecretaryEmail;
@@ -501,6 +564,7 @@ public class ViewSecretaries extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JList<String> jListSecretaries;
+    private javax.swing.JPopupMenu jMenuRight;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

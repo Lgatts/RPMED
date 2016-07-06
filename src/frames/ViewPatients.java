@@ -15,8 +15,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import process.DisplayList;
 import process.Functions;
+import users.Patient;
 
 /**
  *
@@ -30,6 +32,12 @@ public class ViewPatients extends javax.swing.JFrame {
     private DisplayList display = new DisplayList();
     private List<users.Patient> patients = new ArrayList<users.Patient>();
     private static String idToEdit;
+
+    users.Patient selectedPatient;
+
+    public Patient getSelectedPatient() {
+        return selectedPatient;
+    }
 
     public ViewPatients() {
         initComponents();
@@ -49,8 +57,8 @@ public class ViewPatients extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jMenuRight = new javax.swing.JPopupMenu();
+        jDetails = new javax.swing.JMenuItem();
         jTabEdit = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -85,7 +93,6 @@ public class ViewPatients extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jEditPatientName = new javax.swing.JTextField();
-        jEditPatientRg = new javax.swing.JTextField();
         jEditPatientEmail = new javax.swing.JTextField();
         jEditPatientAdress = new javax.swing.JTextField();
         jEditPatientAdressNumber = new javax.swing.JTextField();
@@ -93,13 +100,15 @@ public class ViewPatients extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jEditPatientCpf = new javax.swing.JFormattedTextField();
         jEditPatientFone = new javax.swing.JFormattedTextField();
+        jEditPatientRg = new javax.swing.JFormattedTextField();
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        jDetails.setText("Ver detalhes");
+        jDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDetailsActionPerformed(evt);
+            }
         });
-        jScrollPane1.setViewportView(jList1);
+        jMenuRight.add(jDetails);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -227,6 +236,11 @@ public class ViewPatients extends javax.swing.JFrame {
                 jListPatientsFocusGained(evt);
             }
         });
+        jListPatients.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListPatientsMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jListPatients);
 
         jEditar.setText("Editar");
@@ -342,6 +356,12 @@ public class ViewPatients extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        try {
+            jEditPatientRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -354,33 +374,33 @@ public class ViewPatients extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel11))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jEditPatientAdress, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jEditPatientEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
-                            .addComponent(jButton3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                    .addComponent(jLabel14)
-                                    .addGap(30, 30, 30)
-                                    .addComponent(jEditPatientAdressNumber))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                    .addComponent(jLabel13)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jEditPatientFone, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jEditSavePatients)))
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jEditPatientName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jEditPatientRg, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(jEditPatientCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jEditPatientRg, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel12)
-                            .addGap(18, 18, 18)
-                            .addComponent(jEditPatientCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jEditPatientAdress, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jEditPatientEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                                .addComponent(jButton3))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(jEditPatientAdressNumber))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jEditPatientFone, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jEditSavePatients)))
+                        .addComponent(jEditPatientName, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -393,9 +413,9 @@ public class ViewPatients extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jEditPatientRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(jEditPatientCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jEditPatientCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEditPatientRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -425,7 +445,7 @@ public class ViewPatients extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -557,12 +577,12 @@ public class ViewPatients extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDeleteActionPerformed
-        patients = display.getPatients();        
+        patients = display.getPatients();
         users.Patient patient = patients.get(jListPatients.getSelectedIndex());
         idToEdit = patient.id;
-        
+
         Functions.Delete("patients.txt", 8, idToEdit);
-       
+
         display.clearList();
         display.createElement("patients.txt");
         display.createListModel(jListPatients);
@@ -572,6 +592,47 @@ public class ViewPatients extends javax.swing.JFrame {
         jDelete.setEnabled(true);
         jEditar.setEnabled(true);
     }//GEN-LAST:event_jListPatientsFocusGained
+
+    private void jListPatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListPatientsMouseClicked
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            jMenuRight.setVisible(false);
+            if (evt.getClickCount() == 2) {
+                jMenuRight.setVisible(false);
+                int index = jListPatients.locationToIndex(evt.getPoint());
+
+                selectedPatient = display.getPatients().get(index); //busca na lista de usuário o com o mesmo index da jList para usar seus dados
+                idToEdit = selectedPatient.id;
+
+                jEditPatientEmail.setText(selectedPatient.email);
+                jEditPatientCpf.setText(selectedPatient.cpf);
+                jEditPatientFone.setText(selectedPatient.fone);
+                jEditPatientName.setText(selectedPatient.name);
+                jEditPatientRg.setText(selectedPatient.rg);
+                jEditPatientAdress.setText(selectedPatient.adress);
+                jEditPatientAdressNumber.setText(selectedPatient.adressNumber);
+
+                jTabEdit.setSelectedIndex(2);
+                jTabEdit.setEnabledAt(2, true);
+                jTabEdit.setEnabledAt(0, false);
+                jTabEdit.setEnabledAt(1, false);
+
+            }
+        }
+        if (SwingUtilities.isRightMouseButton(evt)) {
+
+            int index = jListPatients.locationToIndex(evt.getPoint());
+            jListPatients.setSelectedIndex(index);
+            jMenuRight.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
+            jMenuRight.setVisible(true);            
+            selectedPatient = display.getPatients().get(index);
+
+        }
+    }//GEN-LAST:event_jListPatientsMouseClicked
+
+    private void jDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDetailsActionPerformed
+       new PatientDetails(this).setVisible(true);
+       jMenuRight.setVisible(false);
+    }//GEN-LAST:event_jDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -617,13 +678,14 @@ public class ViewPatients extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jDelete;
+    private javax.swing.JMenuItem jDetails;
     private javax.swing.JTextField jEditPatientAdress;
     private javax.swing.JTextField jEditPatientAdressNumber;
     private javax.swing.JFormattedTextField jEditPatientCpf;
     private javax.swing.JTextField jEditPatientEmail;
     private javax.swing.JFormattedTextField jEditPatientFone;
     private javax.swing.JTextField jEditPatientName;
-    private javax.swing.JTextField jEditPatientRg;
+    private javax.swing.JFormattedTextField jEditPatientRg;
     private javax.swing.JButton jEditSavePatients;
     private javax.swing.JButton jEditar;
     private javax.swing.JLabel jLabel1;
@@ -640,8 +702,8 @@ public class ViewPatients extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jListPatients;
+    private javax.swing.JPopupMenu jMenuRight;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
@@ -652,7 +714,6 @@ public class ViewPatients extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jPatientFone;
     private javax.swing.JTextField jPatientName;
     private javax.swing.JTextField jPatientRg;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JPanel jTabList;
