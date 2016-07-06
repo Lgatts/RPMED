@@ -41,8 +41,6 @@ public class ViewDoctors extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jMenuRight = new javax.swing.JPopupMenu();
         jDetails = new javax.swing.JMenuItem();
         jTabEdit = new javax.swing.JTabbedPane();
@@ -74,13 +72,6 @@ public class ViewDoctors extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jEditDoctorFone = new javax.swing.JFormattedTextField();
         jToggleButton2 = new javax.swing.JToggleButton();
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
 
         jDetails.setText("Ver Detalhes");
         jDetails.addActionListener(new java.awt.event.ActionListener() {
@@ -554,7 +545,6 @@ public class ViewDoctors extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jListDoctors;
     private javax.swing.JPopupMenu jMenuRight;
     private javax.swing.JPanel jPanel1;
@@ -562,7 +552,6 @@ public class ViewDoctors extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton jSalvar;
     private javax.swing.JButton jSaveEditDoctor;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabEdit;
     private javax.swing.JFormattedTextField jTextCpfDoctor;

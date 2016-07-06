@@ -17,8 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import process.DisplayList;
 import process.Functions;
+import users.Consult;
 import users.SelectedConsult;
 
 /**
@@ -29,6 +31,14 @@ public class Consultations extends javax.swing.JFrame {
 
     DisplayList patients = new DisplayList();
     DisplayList doctors = new DisplayList();
+    private DisplayList display = new DisplayList();
+    
+    Consult selectedConsult;
+
+    public Consult getSelectedConsult() {
+        return selectedConsult;
+    }
+    
     /**
      * Creates new form Consultations
      */
@@ -44,9 +54,6 @@ public class Consultations extends javax.swing.JFrame {
         patients.createElement("patients.txt");
         patients.createCombotModel(NameAddP);
 
-        
-        
-        
         jTabbedPane1.setSelectedIndex(0);
         jTabbedPane1.setEnabledAt(0, true);
         jTabbedPane1.setEnabledAt(1, true);
@@ -62,6 +69,8 @@ public class Consultations extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuRight = new javax.swing.JPopupMenu();
+        jDetails = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -86,9 +95,7 @@ public class Consultations extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        NameEditP = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        NameEditM = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         DateEdit = new javax.swing.JFormattedTextField();
@@ -96,6 +103,16 @@ public class Consultations extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         startHourEdit = new javax.swing.JFormattedTextField();
         finishHourEdit = new javax.swing.JFormattedTextField();
+        NameEditP = new javax.swing.JComboBox<>();
+        NameEditM = new javax.swing.JComboBox<>();
+
+        jDetails.setText("Ver detalhes");
+        jDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDetailsActionPerformed(evt);
+            }
+        });
+        jMenuRight.add(jDetails);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -216,6 +233,11 @@ public class Consultations extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Adicionar", jPanel1);
 
+        jListConsultations.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListConsultationsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListConsultations);
 
         jButton3.setText("Editar");
@@ -278,19 +300,7 @@ public class Consultations extends javax.swing.JFrame {
 
         jLabel10.setText("Nome do paciente:* ");
 
-        NameEditP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NameEditPActionPerformed(evt);
-            }
-        });
-
         jLabel11.setText("Nome do médico:*");
-
-        NameEditM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NameEditMActionPerformed(evt);
-            }
-        });
 
         jLabel12.setText("Data:*");
 
@@ -341,16 +351,12 @@ public class Consultations extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel10))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(NameEditP, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(NameEditM, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel13)
@@ -359,12 +365,16 @@ public class Consultations extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(DateEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
                                     .addComponent(startHourEdit)
-                                    .addComponent(finishHourEdit))))
-                        .addGap(0, 47, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7)))
+                                    .addComponent(finishHourEdit)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel10))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(NameEditP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(NameEditM, 0, 185, Short.MAX_VALUE))))
+                        .addGap(0, 81, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -402,8 +412,8 @@ public class Consultations extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,18 +454,18 @@ public class Consultations extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        if (DateEdit.getText().equals("  /  /    ") || startHourEdit.getText().equals("  :  ") || finishHourEdit.getText().equals("  :  ") || NameEditP.getText().trim().equals("") || NameEditM.getText().trim().equals("")) {
+        if (DateEdit.getText().equals("  /  /    ") || startHourEdit.getText().equals("  :  ") || finishHourEdit.getText().equals("  :  ")) {
             JOptionPane.showMessageDialog(null, "Para concluir a edição de uma consulta é necessário preencher todos os campos obrigatórios! (*)");
         } else {
-            String id = (DateEdit.getText() + " | " + startHourEdit.getText() + " | " + NameEditP.getText());
+            String id = (DateEdit.getText() + " | " + startHourEdit.getText() + " | " + NameEditP.getSelectedItem().toString());
             List<String> contentToEdit = new ArrayList();
 
             contentToEdit.add(id);
             contentToEdit.add(DateEdit.getText());
             contentToEdit.add(startHourEdit.getText());
             contentToEdit.add(finishHourEdit.getText());
-            contentToEdit.add(NameEditP.getText());
-            contentToEdit.add(NameEditM.getText());
+            contentToEdit.add(NameEditP.getSelectedItem().toString());
+            contentToEdit.add(NameEditM.getSelectedItem().toString());
 
             Functions.Edit("consultation.txt", contentToEdit, idToEdit);//editando o arquivo que chama users.txt com o conteudo da aba edit
 
@@ -483,14 +493,6 @@ public class Consultations extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(0, true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void NameEditMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameEditMActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NameEditMActionPerformed
-
-    private void NameEditPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameEditPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NameEditPActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         this.dispose();
         User back = new User();
@@ -504,6 +506,9 @@ public class Consultations extends javax.swing.JFrame {
         Functions.Delete("consultation.txt", 6, idToEdit);
         Functions.Delete("consultations.txt", 1, idToEdit);
         process.Functions.createListModel("consultations.txt", this.jListConsultations);
+
+        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -532,9 +537,25 @@ public class Consultations extends javax.swing.JFrame {
             DateEdit.setText(date);
             startHourEdit.setText(startHour);
             finishHourEdit.setText(finishHour);
-            NameEditP.setText(namePatient);
-            NameEditM.setText(nameDoctor);
 
+            patients.createCombotModel(NameEditP);
+            doctors.createCombotModel(NameEditM);
+
+            for(int i = 0; i < NameEditM.getItemCount();i++){
+                if(NameEditM.getItemAt(i).equals(nameDoctor)){
+                    NameEditM.setSelectedIndex(i);
+                    break;
+                }
+            }
+            
+            for(int i = 0; i < NameEditP.getItemCount();i++){
+                if(NameEditP.getItemAt(i).equals(namePatient)){
+                    NameEditP.setSelectedIndex(i);
+                    break;
+                }
+            }
+            //NameEditP.setText(namePatient);
+            //NameEditM.setText(nameDoctor);
             idToEdit = id;
 
         } catch (IOException ex) {
@@ -569,7 +590,7 @@ public class Consultations extends javax.swing.JFrame {
                 DateAdd.setText("");
                 startHour.setText("");
                 finishHour.setText("");
-                
+
                 JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
 
             } catch (IOException ex) {
@@ -589,6 +610,26 @@ public class Consultations extends javax.swing.JFrame {
         User back = new User();
         back.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jListConsultationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListConsultationsMouseClicked
+        if (SwingUtilities.isRightMouseButton(evt)) {
+
+            
+            display.createElement("consultation.txt");
+            display.createListModel(jListConsultations);
+            int index = jListConsultations.locationToIndex(evt.getPoint());
+            jListConsultations.setSelectedIndex(index);
+            jMenuRight.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
+            jMenuRight.setVisible(true);    
+            selectedConsult = display.getConsults().get(index);
+
+        }
+    }//GEN-LAST:event_jListConsultationsMouseClicked
+
+    private void jDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDetailsActionPerformed
+        new ConsultationDetails2(this).setVisible(true);
+       jMenuRight.setVisible(false);
+    }//GEN-LAST:event_jDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -667,8 +708,8 @@ public class Consultations extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField DateEdit;
     private javax.swing.JComboBox<String> NameAddM;
     private javax.swing.JComboBox<String> NameAddP;
-    private javax.swing.JTextField NameEditM;
-    private javax.swing.JTextField NameEditP;
+    private javax.swing.JComboBox<String> NameEditM;
+    private javax.swing.JComboBox<String> NameEditP;
     private javax.swing.JFormattedTextField finishHour;
     private javax.swing.JFormattedTextField finishHourEdit;
     private javax.swing.JButton jButton1;
@@ -677,6 +718,7 @@ public class Consultations extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JMenuItem jDetails;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -688,6 +730,7 @@ public class Consultations extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JList<String> jListConsultations;
+    private javax.swing.JPopupMenu jMenuRight;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
